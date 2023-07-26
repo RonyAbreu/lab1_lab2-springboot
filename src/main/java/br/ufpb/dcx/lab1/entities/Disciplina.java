@@ -1,5 +1,4 @@
 package br.ufpb.dcx.lab1.entities;
-
 import lombok.*;
 
 import java.util.List;
