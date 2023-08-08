@@ -13,8 +13,8 @@ public class DisciplinaServices {
     @Autowired
     private DisciplinaRepository disciplinaRepository;
 
-    public void add(Disciplina d){
-        disciplinaRepository.save(d);
+    public Disciplina add(Disciplina d){
+        return disciplinaRepository.save(d);
     }
 
     public Disciplina findById(Long id){
@@ -23,7 +23,21 @@ public class DisciplinaServices {
     }
 
     public List<Disciplina> findAll(){
-        List<Disciplina> list = disciplinaRepository.findAll();
-        return list;
+        return disciplinaRepository.findAll();
+    }
+
+    public void delete(Long id){
+        disciplinaRepository.deleteById(id);
+    }
+
+    public Disciplina update(Disciplina disciplina, Long id){
+        Disciplina novaDisciplina = disciplinaRepository.getReferenceById(id);
+        updateData(novaDisciplina, disciplina);
+        return disciplinaRepository.save(novaDisciplina);
+    }
+
+    private void updateData(Disciplina novaDisciplina, Disciplina disciplina) {
+        novaDisciplina.setNome(disciplina.getNome());
+        novaDisciplina.setLikes(disciplina.getLikes());
     }
 }
