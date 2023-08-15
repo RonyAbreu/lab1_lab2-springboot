@@ -1,43 +1,63 @@
 package br.ufpb.dcx.lab1.services;
 
 import br.ufpb.dcx.lab1.entities.Disciplina;
-import br.ufpb.dcx.lab1.repository.DisciplinaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DisciplinaServices {
-    @Autowired
-    private DisciplinaRepository disciplinaRepository;
+    private Map<Integer, Disciplina> dataBase = new HashMap<>();
 
-    public Disciplina add(Disciplina d){
-        return disciplinaRepository.save(d);
+    public Disciplina add(Disciplina d) {
+        return dataBase.put(d.getId(), d);
     }
 
-    public Disciplina findById(Long id){
-        Optional<Disciplina> d = disciplinaRepository.findById(id);
-        return d.get();
+    public Disciplina findById(Integer id){
+        try {
+            Optional<Disciplina> d = Optional.ofNullable(dataBase.get(id));
+            return d.orElseThrow(() -> new Exception("Disciplina não encontrada!"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public List<Disciplina> findAll(){
-        return disciplinaRepository.findAll();
+    public List<Disciplina> findAll() {
+        return new ArrayList<>(dataBase.values());
     }
 
-    public void delete(Long id){
-        disciplinaRepository.deleteById(id);
+    public void delete(Integer id) {
+        dataBase.remove(id);
     }
 
-    public Disciplina update(Disciplina disciplina, Long id){
-        Disciplina novaDisciplina = disciplinaRepository.getReferenceById(id);
-        updateData(novaDisciplina, disciplina);
-        return disciplinaRepository.save(novaDisciplina);
-    }
-
-    private void updateData(Disciplina novaDisciplina, Disciplina disciplina) {
+    public Disciplina update(Disciplina disciplina, Integer id) {
+        Disciplina novaDisciplina = dataBase.get(id);
         novaDisciplina.setNome(disciplina.getNome());
-        novaDisciplina.setLikes(disciplina.getLikes());
+        return dataBase.put(id, novaDisciplina);
     }
+
+    public  Disciplina addNota(Integer id, Integer nota){
+        Disciplina disciplina = dataBase.get(id);
+        disciplina.getNotas().add(nota);
+        return dataBase.put(id,disciplina);
+    }
+
+    public  Disciplina addLike(Integer id, Integer like){
+        Disciplina disciplina = dataBase.get(id);
+        int somaLike = disciplina.getLikes() + 1;
+        disciplina.setLikes(somaLike);
+        return dataBase.put(id,disciplina);
+    }
+
+    public List<Disciplina> findRanking(){
+        List<Disciplina> list = new ArrayList<>(dataBase.values());
+        return null;
+    }
+
+
+
+
+
+
 }
+

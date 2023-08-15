@@ -1,5 +1,4 @@
 package br.ufpb.dcx.lab1.entities;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,16 +11,14 @@ import java.util.Objects;
 @Setter
 @ToString
 
-@Entity
-@Table(name = "tb_disciplina")
 public class Disciplina implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String nome;
     private Integer likes;
     private List<Integer> notas = new ArrayList<>();
 
-    public Disciplina(String nome, Integer likes) {
+    public Disciplina(Integer id, String nome, Integer likes) {
+        this.id = id;
         this.nome = nome;
         this.likes = likes;
     }
