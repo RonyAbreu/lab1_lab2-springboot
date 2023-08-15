@@ -1,5 +1,8 @@
 package br.ufpb.dcx.lab1.entities;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 
-public class Disciplina implements Serializable, Comparable {
+public class Disciplina implements Serializable{
     private Integer id;
     private String nome;
     private Integer likes;
@@ -44,10 +47,5 @@ public class Disciplina implements Serializable, Comparable {
     @Override
     public int hashCode() {
         return Objects.hash(id, nome);
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
     }
 }
