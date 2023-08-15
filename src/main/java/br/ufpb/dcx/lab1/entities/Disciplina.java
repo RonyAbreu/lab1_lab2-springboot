@@ -11,7 +11,7 @@ import java.util.Objects;
 @Setter
 @ToString
 
-public class Disciplina implements Serializable {
+public class Disciplina implements Serializable, Comparable {
     private Integer id;
     private String nome;
     private Integer likes;
@@ -21,6 +21,16 @@ public class Disciplina implements Serializable {
         this.id = id;
         this.nome = nome;
         this.likes = likes;
+    }
+
+    public Integer getMedia(){
+        Integer media = 0;
+        Integer valorTotal = 0;
+        for (Integer i: notas){
+            valorTotal+=i;
+            media = valorTotal/notas.size();
+        }
+        return media;
     }
 
     @Override
@@ -34,5 +44,10 @@ public class Disciplina implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, nome);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }
