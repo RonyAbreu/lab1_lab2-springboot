@@ -5,7 +5,15 @@ import br.ufpb.dcx.lab1.services.DisciplinaServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -17,12 +25,12 @@ public class DisciplinaController {
 
     @PostMapping
     public ResponseEntity<Disciplina> add(@RequestBody Disciplina d){
-        d = disciplinaServices.add(d);
-        return ResponseEntity.ok().body(d);
+        Disciplina obj = disciplinaServices.add(d);
+        return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Disciplina> findById(@PathVariable Integer id){
+    public ResponseEntity<Disciplina> findById(@PathVariable Integer id) throws Exception {
         Disciplina d = disciplinaServices.findById(id);
         return ResponseEntity.ok().body(d);
     }
@@ -40,23 +48,23 @@ public class DisciplinaController {
         return new ResponseEntity<>(status);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Disciplina> update(@RequestBody Disciplina disciplina, @PathVariable Integer id){
-        disciplinaServices.update(disciplina,id);
-        return ResponseEntity.ok().body(disciplina);
+    @PutMapping(value = "/{id}/nome")
+    public ResponseEntity<Disciplina> update(@PathVariable Integer id, @RequestBody Disciplina obj){
+        Disciplina d = disciplinaServices.update(obj,id);
+        return ResponseEntity.ok().body(d);
     }
 
-//    @PutMapping(value = "/{id}")
-//    public ResponseEntity<Disciplina> addNota(@PathVariable Integer id, @RequestBody Integer nota){
-//        Disciplina obj = disciplinaServices.addNota(id, nota);
-//        return ResponseEntity.ok().body(obj);
-//    }
-//
-//    @PutMapping(value = "/{id}")
-//    public ResponseEntity<Disciplina> addLike(@PathVariable Integer id, @RequestBody Integer like){
-//        Disciplina obj = disciplinaServices.addNota(id, like);
-//        return ResponseEntity.ok().body(obj);
-//    }
+    @PutMapping(value = "/{id}/nota")
+    public ResponseEntity<Disciplina> addNota(@PathVariable Integer id, @RequestParam(value = "nota")Integer nota){
+        Disciplina d = disciplinaServices.addNota(id,nota);
+        return ResponseEntity.ok().body(d);
+    }
+
+    @PutMapping(value = "/{id}/like")
+    public ResponseEntity<Disciplina> addLike(@PathVariable Integer id,@RequestParam(value = "like")Integer like){
+        Disciplina d = disciplinaServices.addLike(id, like);
+        return ResponseEntity.ok().body(d);
+    }
 
     @GetMapping(value = "/ranking")
     public ResponseEntity<List<Disciplina>> findRanking(){
