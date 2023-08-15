@@ -3,23 +3,27 @@ package br.ufpb.dcx.lab1.services;
 import br.ufpb.dcx.lab1.entities.Disciplina;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class DisciplinaServices {
     private Map<Integer, Disciplina> dataBase = new HashMap<>();
 
-    public Disciplina add(Disciplina d) {
-        return dataBase.put(d.getId(), d);
+    public Disciplina add(Disciplina obj) {
+        Disciplina d = dataBase.put(obj.getId(),obj);
+        return d;
     }
 
-    public Disciplina findById(Integer id){
-        try {
-            Optional<Disciplina> d = Optional.ofNullable(dataBase.get(id));
-            return d.orElseThrow(() -> new Exception("Disciplina não encontrada!"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public Disciplina findById(Integer id) throws Exception {
+        Optional<Disciplina> d = Optional.ofNullable(dataBase.get(id));
+        return d.orElseThrow(() -> new Exception("Disciplina não encontrada!"));
+
     }
 
     public List<Disciplina> findAll() {
@@ -30,28 +34,32 @@ public class DisciplinaServices {
         dataBase.remove(id);
     }
 
-    public Disciplina update(Disciplina disciplina, Integer id) {
+    public Disciplina update(Disciplina obj, Integer id) {
         Disciplina novaDisciplina = dataBase.get(id);
-        novaDisciplina.setNome(disciplina.getNome());
-        return dataBase.put(id, novaDisciplina);
+        novaDisciplina.setNome(obj.getNome());
+        dataBase.put(id, novaDisciplina);
+        return novaDisciplina;
     }
 
-    public  Disciplina addNota(Integer id, Integer nota){
-        Disciplina disciplina = dataBase.get(id);
-        disciplina.getNotas().add(nota);
-        return dataBase.put(id,disciplina);
+    public Disciplina addNota(Integer id, Integer nota){
+        Disciplina novaDisciplina = dataBase.get(id);
+        novaDisciplina.getNotas().add(nota);
+        dataBase.put(id, novaDisciplina);
+        return novaDisciplina;
     }
 
     public  Disciplina addLike(Integer id, Integer like){
-        Disciplina disciplina = dataBase.get(id);
-        int somaLike = disciplina.getLikes() + 1;
-        disciplina.setLikes(somaLike);
-        return dataBase.put(id,disciplina);
+        Disciplina novaDisciplina = dataBase.get(id);
+        int somaLike = novaDisciplina.getLikes() + 1;
+        novaDisciplina.setLikes(somaLike);
+        dataBase.put(id, novaDisciplina);
+        return novaDisciplina;
     }
 
     public List<Disciplina> findRanking(){
         List<Disciplina> list = new ArrayList<>(dataBase.values());
-        return null;
+        Collections.sort(list,Comparator.comparingInt(Disciplina::getMedia).reversed());
+        return list;
     }
 
 
