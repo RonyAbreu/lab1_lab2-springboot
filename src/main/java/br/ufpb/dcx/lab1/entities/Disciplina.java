@@ -27,7 +27,7 @@ public class Disciplina implements Serializable{
     public Disciplina(Long id, String nome, Integer likes) {
         this.id = id;
         this.nome = nome;
-        this.likes = likes;
+        this.likes = 0;
     }
 
     public Disciplina(String nome) {

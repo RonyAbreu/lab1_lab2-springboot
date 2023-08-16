@@ -68,14 +68,10 @@ public class DisciplinaServices {
         novaDisciplina.get().getNotas().add(nota);
     }
 
-    public  Disciplina addLike(Long id, Integer like){
+    public void addLike(Long id, Integer like){
         Optional<Disciplina> novaDisciplina = repository.findById(id);
-        if (!novaDisciplina.isPresent()){
-            throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
-        }
-        int somaLike = novaDisciplina.get().getLikes() + 1;
-        novaDisciplina.get().setLikes(somaLike);
-        return repository.save(novaDisciplina.get());
+        novaDisciplina.get().setLikes(like);
+        repository.save(novaDisciplina.get());
     }
 
     public List<Disciplina> findRanking(){

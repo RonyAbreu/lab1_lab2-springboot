@@ -63,9 +63,9 @@ public class DisciplinaController {
     }
 
     @PutMapping(value = "/{id}/like")
-    public ResponseEntity<Disciplina> addLike(@PathVariable Long id,@RequestParam(value = "like")Integer like){
-        Disciplina d = disciplinaServices.addLike(id, like);
-        return ResponseEntity.ok().body(d);
+    public ResponseEntity<Void> addLike(@PathVariable Long id, @RequestParam(value = "like")Integer like){
+        disciplinaServices.addLike(id,like);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/ranking")
