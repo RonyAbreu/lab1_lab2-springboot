@@ -1,8 +1,11 @@
 package br.ufpb.dcx.lab1.entities;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,13 +16,15 @@ import java.util.Objects;
 @Getter
 @Setter
 
+@Entity
 public class Disciplina implements Serializable{
-    private Integer id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
     private Integer likes;
     private List<Integer> notas = new ArrayList<>();
 
-    public Disciplina(Integer id, String nome, Integer likes) {
+    public Disciplina(Long id, String nome, Integer likes) {
         this.id = id;
         this.nome = nome;
         this.likes = likes;

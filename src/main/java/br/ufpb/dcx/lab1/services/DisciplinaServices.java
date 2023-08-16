@@ -2,82 +2,84 @@ package br.ufpb.dcx.lab1.services;
 
 import br.ufpb.dcx.lab1.dto.DisciplinaDTO;
 import br.ufpb.dcx.lab1.entities.Disciplina;
+import br.ufpb.dcx.lab1.repository.DisciplinaRepository;
 import br.ufpb.dcx.lab1.services.exceptions.DisciplinaNotFound;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class DisciplinaServices {
-    private Map<Integer, Disciplina> dataBase = new HashMap<>();
+    @Autowired
+    private DisciplinaRepository repository;
 
     public Disciplina add(Disciplina obj) {
-        List<Disciplina> list = new ArrayList<>(dataBase.values());
-        Integer id = list.stream().map(Disciplina::getId).reduce(1,(x,y)->x+dataBase.size());
-        obj.setId(id);
-        return dataBase.put(obj.getId(),obj);
+        return repository.save(obj);
     }
 
-    public Disciplina findById(Integer id) throws DisciplinaNotFound {
-        Optional<Disciplina> d = Optional.ofNullable(dataBase.get(id));
+    public Disciplina findById(Long id) throws DisciplinaNotFound {
+        Optional<Disciplina> d = repository.findById(id);
         return d.orElseThrow(() -> new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id));
 
     }
 
     public List<Disciplina> findAll() {
-        if (dataBase.size() == 0){
+        List<Disciplina> list = repository.findAll();
+        if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
-        return new ArrayList<>(dataBase.values());
+        return repository.findAll();
     }
 
-    public void delete(Integer id) {
-        Disciplina d = dataBase.get(id);
+    public void delete(Long id) {
+        Disciplina d = repository.getReferenceById(id);
         if (d == null){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
-        dataBase.remove(id);
+        repository.deleteById(id);
     }
 
-    public Disciplina update(Disciplina obj, Integer id) {
-        Disciplina novaDisciplina = dataBase.get(id);
-        if (novaDisciplina == null){
+    public Disciplina update(Disciplina obj, Long id) {
+        Optional<Disciplina> novaDisciplina = repository.findById(id);
+        if (!novaDisciplina.isPresent()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
+        updateDisciplina(novaDisciplina.get(), obj);
+        return repository.save(novaDisciplina.get());
+    }
+
+    private void updateDisciplina(Disciplina novaDisciplina, Disciplina obj) {
         novaDisciplina.setNome(obj.getNome());
-        dataBase.put(id, novaDisciplina);
-        return novaDisciplina;
     }
 
-    public Disciplina addNota(Integer id, Integer nota){
-        Disciplina novaDisciplina = dataBase.get(id);
-        if (novaDisciplina == null){
+    public Disciplina addNota(Long id, Integer nota){
+        Optional<Disciplina> novaDisciplina = repository.findById(id);
+        if (!novaDisciplina.isPresent()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
-        novaDisciplina.getNotas().add(nota);
-        dataBase.put(id, novaDisciplina);
-        return novaDisciplina;
+        updateNota(novaDisciplina, nota);
+        return repository.save(novaDisciplina.get());
     }
 
-    public  Disciplina addLike(Integer id, Integer like){
-        Disciplina novaDisciplina = dataBase.get(id);
-        if (novaDisciplina == null){
+    private void updateNota(Optional<Disciplina> novaDisciplina, Integer nota) {
+        novaDisciplina.get().getNotas().add(nota);
+    }
+
+    public  Disciplina addLike(Long id, Integer like){
+        Optional<Disciplina> novaDisciplina = repository.findById(id);
+        if (!novaDisciplina.isPresent()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
-        int somaLike = novaDisciplina.getLikes() + 1;
-        novaDisciplina.setLikes(somaLike);
-        dataBase.put(id, novaDisciplina);
-        return novaDisciplina;
+        int somaLike = novaDisciplina.get().getLikes() + 1;
+        novaDisciplina.get().setLikes(somaLike);
+        return repository.save(novaDisciplina.get());
     }
 
     public List<Disciplina> findRanking(){
-        List<Disciplina> list = new ArrayList<>(dataBase.values());
+        List<Disciplina> list = repository.findAll();
         if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }

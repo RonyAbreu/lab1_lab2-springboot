@@ -32,7 +32,7 @@ public class DisciplinaController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Disciplina> findById(@PathVariable Integer id){
+    public ResponseEntity<Disciplina> findById(@PathVariable Long id){
         Disciplina d = disciplinaServices.findById(id);
         return ResponseEntity.ok().body(d);
     }
@@ -44,26 +44,26 @@ public class DisciplinaController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
         disciplinaServices.delete(id);
         HttpStatus status = HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(status);
     }
 
     @PutMapping(value = "/{id}/nome")
-    public ResponseEntity<Disciplina> update(@PathVariable Integer id, @RequestBody Disciplina obj){
+    public ResponseEntity<Disciplina> update(@PathVariable Long id, @RequestBody Disciplina obj){
         Disciplina d = disciplinaServices.update(obj,id);
         return ResponseEntity.ok().body(d);
     }
 
     @PutMapping(value = "/{id}/nota")
-    public ResponseEntity<Disciplina> addNota(@PathVariable Integer id, @RequestParam(value = "nota")Integer nota){
+    public ResponseEntity<Disciplina> addNota(@PathVariable Long id, @RequestParam(value = "nota")Integer nota){
         Disciplina d = disciplinaServices.addNota(id,nota);
         return ResponseEntity.ok().body(d);
     }
 
     @PutMapping(value = "/{id}/like")
-    public ResponseEntity<Disciplina> addLike(@PathVariable Integer id,@RequestParam(value = "like")Integer like){
+    public ResponseEntity<Disciplina> addLike(@PathVariable Long id,@RequestParam(value = "like")Integer like){
         Disciplina d = disciplinaServices.addLike(id, like);
         return ResponseEntity.ok().body(d);
     }
