@@ -17,8 +17,7 @@ public class DisciplinaServices {
     private Map<Integer, Disciplina> dataBase = new HashMap<>();
 
     public Disciplina add(Disciplina obj) {
-        Disciplina d = dataBase.put(obj.getId(),obj);
-        return d;
+        return dataBase.put(obj.getId(),obj);
     }
 
     public Disciplina findById(Integer id) throws DisciplinaNotFound {
