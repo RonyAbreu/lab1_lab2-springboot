@@ -68,9 +68,10 @@ public class DisciplinaServices {
         novaDisciplina.get().getNotas().add(nota);
     }
 
-    public void addLike(Long id, Integer like){
-        Optional<Disciplina> novaDisciplina = repository.findById(id);
-        novaDisciplina.get().setLikes(like);
+    public void addLike(Disciplina obj){
+        Optional<Disciplina> novaDisciplina = repository.findById(obj.getId());
+        novaDisciplina.get().setLikes(0);
+        novaDisciplina.get().somaLike();
         repository.save(novaDisciplina.get());
     }
 

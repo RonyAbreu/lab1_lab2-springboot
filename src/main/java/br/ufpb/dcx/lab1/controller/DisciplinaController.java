@@ -63,8 +63,8 @@ public class DisciplinaController {
     }
 
     @PutMapping(value = "/{id}/like")
-    public ResponseEntity<Void> addLike(@PathVariable Long id, @RequestParam(value = "like")Integer like){
-        disciplinaServices.addLike(id,like);
+    public ResponseEntity<Void> addLike(@RequestBody Disciplina obj){
+        disciplinaServices.addLike(obj);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -34,6 +34,10 @@ public class Disciplina implements Serializable{
         this.nome = nome;
     }
 
+    public Integer somaLike(){
+        return likes++;
+    }
+
     public Integer getMedia(){
         Integer media = 0;
         Integer valorTotal = 0;
