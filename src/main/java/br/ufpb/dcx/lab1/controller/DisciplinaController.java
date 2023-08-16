@@ -26,8 +26,8 @@ public class DisciplinaController {
 
     @PostMapping
     public ResponseEntity<Disciplina> add(@RequestBody DisciplinaDTO d){
-        Disciplina obj = disciplinaServices.add(d);
-        DisciplinaDTO objDto = new DisciplinaDTO(obj);
+        Disciplina obj = disciplinaServices.fromDto(d);
+        disciplinaServices.add(obj);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

@@ -25,6 +25,10 @@ public class Disciplina implements Serializable{
         this.likes = likes;
     }
 
+    public Disciplina(String nome) {
+        this.nome = nome;
+    }
+
     public Integer getMedia(){
         Integer media = 0;
         Integer valorTotal = 0;

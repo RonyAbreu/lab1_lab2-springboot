@@ -18,6 +18,9 @@ public class DisciplinaServices {
     private Map<Integer, Disciplina> dataBase = new HashMap<>();
 
     public Disciplina add(Disciplina obj) {
+        List<Disciplina> list = new ArrayList<>(dataBase.values());
+        Integer id = list.stream().map(Disciplina::getId).reduce(1,(x,y)->x+dataBase.size());
+        obj.setId(id);
         return dataBase.put(obj.getId(),obj);
     }
 
@@ -80,6 +83,10 @@ public class DisciplinaServices {
         }
         list.sort(Comparator.comparingInt(Disciplina::getMedia).reversed());
         return list;
+    }
+
+    public Disciplina fromDto(DisciplinaDTO objDto){
+        return new Disciplina(objDto.getNome());
     }
 }
 
