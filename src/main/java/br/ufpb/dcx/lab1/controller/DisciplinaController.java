@@ -1,5 +1,6 @@
 package br.ufpb.dcx.lab1.controller;
 
+import br.ufpb.dcx.lab1.dto.DisciplinaDTO;
 import br.ufpb.dcx.lab1.entities.Disciplina;
 import br.ufpb.dcx.lab1.services.DisciplinaServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,10 @@ public class DisciplinaController {
     private DisciplinaServices disciplinaServices;
 
     @PostMapping
-    public ResponseEntity<Disciplina> add(@RequestBody Disciplina d){
+    public ResponseEntity<Disciplina> add(@RequestBody DisciplinaDTO d){
         Disciplina obj = disciplinaServices.add(d);
-        return ResponseEntity.status(HttpStatus.CREATED).body(obj);
+        DisciplinaDTO objDto = new DisciplinaDTO(obj);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping(value = "/{id}")

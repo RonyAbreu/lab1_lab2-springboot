@@ -1,5 +1,6 @@
 package br.ufpb.dcx.lab1.services;
 
+import br.ufpb.dcx.lab1.dto.DisciplinaDTO;
 import br.ufpb.dcx.lab1.entities.Disciplina;
 import br.ufpb.dcx.lab1.services.exceptions.DisciplinaNotFound;
 import org.springframework.stereotype.Service;
@@ -80,11 +81,5 @@ public class DisciplinaServices {
         list.sort(Comparator.comparingInt(Disciplina::getMedia).reversed());
         return list;
     }
-
-
-
-
-
-
 }
 

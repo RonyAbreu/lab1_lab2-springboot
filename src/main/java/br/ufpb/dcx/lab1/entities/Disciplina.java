@@ -12,7 +12,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 
 public class Disciplina implements Serializable{
     private Integer id;
