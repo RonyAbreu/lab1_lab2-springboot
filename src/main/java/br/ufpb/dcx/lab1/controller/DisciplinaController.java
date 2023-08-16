@@ -30,7 +30,7 @@ public class DisciplinaController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Disciplina> findById(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<Disciplina> findById(@PathVariable Integer id){
         Disciplina d = disciplinaServices.findById(id);
         return ResponseEntity.ok().body(d);
     }

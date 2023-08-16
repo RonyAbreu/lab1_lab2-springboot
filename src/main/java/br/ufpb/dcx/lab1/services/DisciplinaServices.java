@@ -17,8 +17,7 @@ public class DisciplinaServices {
     private Map<Integer, Disciplina> dataBase = new HashMap<>();
 
     public Disciplina add(Disciplina obj) {
-        Disciplina d = dataBase.put(obj.getId(),obj);
-        return d;
+        return dataBase.put(obj.getId(),obj);
     }
 
     public Disciplina findById(Integer id) throws DisciplinaNotFound {
@@ -78,7 +77,7 @@ public class DisciplinaServices {
         if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
-        Collections.sort(list,Comparator.comparingInt(Disciplina::getMedia).reversed());
+        list.sort(Comparator.comparingInt(Disciplina::getMedia).reversed());
         return list;
     }
 
