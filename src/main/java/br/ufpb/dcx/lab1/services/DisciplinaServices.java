@@ -68,11 +68,10 @@ public class DisciplinaServices {
         novaDisciplina.get().getNotas().add(nota);
     }
 
-    public void addLike(Disciplina obj){
-        Optional<Disciplina> novaDisciplina = repository.findById(obj.getId());
-        novaDisciplina.get().setLikes(0);
-        novaDisciplina.get().somaLike();
-        repository.save(novaDisciplina.get());
+    public Disciplina addLike(Long id){
+        Optional<Disciplina> novaDisciplina = repository.findById(id);
+        novaDisciplina.get().somaLikes();
+        return repository.save(novaDisciplina.get());
     }
 
     public List<Disciplina> findRanking(){
@@ -85,7 +84,7 @@ public class DisciplinaServices {
     }
 
     public Disciplina fromDto(DisciplinaDTO objDto){
-        return new Disciplina(objDto.getNome());
+        return new Disciplina(objDto.getNome(),0);
     }
 }
 

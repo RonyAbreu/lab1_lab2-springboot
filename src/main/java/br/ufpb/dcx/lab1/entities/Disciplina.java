@@ -24,18 +24,13 @@ public class Disciplina implements Serializable{
     private Integer likes;
     private List<Integer> notas = new ArrayList<>();
 
-    public Disciplina(Long id, String nome, Integer likes) {
-        this.id = id;
+    public Disciplina(String nome, Integer likes) {
         this.nome = nome;
-        this.likes = 0;
+        this.likes = likes;
     }
 
-    public Disciplina(String nome) {
-        this.nome = nome;
-    }
-
-    public Integer somaLike(){
-        return likes++;
+    public void somaLikes(){
+        this.likes++;
     }
 
     public Integer getMedia(){

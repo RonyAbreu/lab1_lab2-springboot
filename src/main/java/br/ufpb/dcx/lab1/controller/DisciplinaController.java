@@ -6,15 +6,7 @@ import br.ufpb.dcx.lab1.services.DisciplinaServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -50,22 +42,22 @@ public class DisciplinaController {
         return new ResponseEntity<>(status);
     }
 
-    @PutMapping(value = "/{id}/nome")
+    @PutMapping(value = "/{id}/update")
     public ResponseEntity<Disciplina> update(@PathVariable Long id, @RequestBody Disciplina obj){
         Disciplina d = disciplinaServices.update(obj,id);
         return ResponseEntity.ok().body(d);
     }
 
-    @PutMapping(value = "/{id}/nota")
+    @PatchMapping(value = "/{id}/nota")
     public ResponseEntity<Disciplina> addNota(@PathVariable Long id, @RequestParam(value = "nota")Integer nota){
         Disciplina d = disciplinaServices.addNota(id,nota);
         return ResponseEntity.ok().body(d);
     }
 
-    @PutMapping(value = "/{id}/like")
-    public ResponseEntity<Void> addLike(@RequestBody Disciplina obj){
-        disciplinaServices.addLike(obj);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PatchMapping(value = "/{id}/like")
+    public ResponseEntity<Disciplina> addLike(@PathVariable Long id){
+        Disciplina d = disciplinaServices.addLike(id);
+        return ResponseEntity.ok().body(d);
     }
 
     @GetMapping(value = "/ranking")
