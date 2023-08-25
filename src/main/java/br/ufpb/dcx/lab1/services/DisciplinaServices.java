@@ -35,8 +35,8 @@ public class DisciplinaServices {
     }
 
     public void delete(Long id) {
-        Disciplina d = repository.getReferenceById(id);
-        if (d == null){
+        Optional<Disciplina> d = Optional.ofNullable(findById(id));
+        if (!d.isPresent()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
         repository.deleteById(id);
@@ -70,6 +70,9 @@ public class DisciplinaServices {
 
     public Disciplina addLike(Long id){
         Optional<Disciplina> novaDisciplina = repository.findById(id);
+        if (!novaDisciplina.isPresent()){
+            throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
+        }
         novaDisciplina.get().somaLikes();
         return repository.save(novaDisciplina.get());
     }
