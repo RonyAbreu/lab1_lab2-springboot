@@ -32,10 +32,14 @@ public class TestConfig implements CommandLineRunner {
 
         Comentario c1 = new Comentario(null, LocalDate.parse("11/10/2000",dtf),"Eu não gosto de português",false,dis1);
         Comentario c2 = new Comentario(null, LocalDate.now(),"Muito bom",false,dis2);
-        Comentario c3 = new Comentario(null, LocalDate.parse("01/01/2001",dtf),"Gostei bastante",false,dis2);
+        Comentario c3 = new Comentario(null, LocalDate.parse("01/01/2001",dtf),"Gostei bastante",false,dis3);
 
         comentarioRepository.saveAll(Arrays.asList(c1,c2,c3));
-        disciplinaRepository.saveAll(Arrays.asList(dis1,dis2));
+
+        dis1.getComentarios().add(c1);
+        dis2.getComentarios().add(c2);
+        dis3.getComentarios().add(c3);
+        disciplinaRepository.saveAll(Arrays.asList(dis1,dis2,dis3));
 
     }
 }

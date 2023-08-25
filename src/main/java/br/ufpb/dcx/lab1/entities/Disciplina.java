@@ -1,9 +1,9 @@
 package br.ufpb.dcx.lab1.entities;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Lazy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,16 +24,13 @@ public class Disciplina implements Serializable{
     private List<Integer> notas = new ArrayList<>();
 
     @OneToMany(mappedBy = "disciplina")
+    @Lazy
     private List<Comentario> comentarios = new ArrayList<>();
 
     public Disciplina(Long id,String nome, Integer likes) {
         this.id = id;
         this.nome = nome;
         this.likes = likes;
-    }
-
-    public Disciplina(@JsonProperty("nome") String nome){
-        this.nome = nome;
     }
 
     public void somaLikes(){

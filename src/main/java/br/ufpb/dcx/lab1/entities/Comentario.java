@@ -1,5 +1,6 @@
 package br.ufpb.dcx.lab1.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +24,7 @@ public class Comentario implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "disciplina_id")
+    @JsonIgnore
     private Disciplina disciplina;
+
 }

@@ -1,6 +1,7 @@
 package br.ufpb.dcx.lab1.controller;
 
 import br.ufpb.dcx.lab1.dto.DisciplinaDTO;
+import br.ufpb.dcx.lab1.entities.Comentario;
 import br.ufpb.dcx.lab1.entities.Disciplina;
 import br.ufpb.dcx.lab1.services.DisciplinaServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class DisciplinaController {
     private DisciplinaServices disciplinaServices;
 
     @PostMapping
-    public ResponseEntity<Disciplina> add(@RequestBody DisciplinaDTO d){
+    public ResponseEntity<Void> add(@RequestBody DisciplinaDTO d){
         Disciplina obj = disciplinaServices.fromDto(d);
         disciplinaServices.add(obj);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -66,6 +67,12 @@ public class DisciplinaController {
         return ResponseEntity.ok().body(list);
     }
 
-    
+    @PostMapping(value = "/{id}/comentarios")
+    public ResponseEntity<Disciplina> addComment(@PathVariable Long id, @RequestBody Comentario comentario){
+        Disciplina disciplina = disciplinaServices.findById(id);
+        disciplina.getComentarios().add(comentario);
+        disciplinaServices.add(disciplina);
+        return ResponseEntity.ok().body(disciplina);
+    }
 
 }
