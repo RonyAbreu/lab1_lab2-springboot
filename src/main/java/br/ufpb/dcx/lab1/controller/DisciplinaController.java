@@ -66,4 +66,6 @@ public class DisciplinaController {
         return ResponseEntity.ok().body(list);
     }
 
+    
+
 }

@@ -1,8 +1,6 @@
 package br.ufpb.dcx.lab1.entities;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +15,7 @@ import java.util.Objects;
 @Setter
 
 @Entity
+@Table(name = "tb_disciplinas")
 public class Disciplina implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,9 +23,17 @@ public class Disciplina implements Serializable{
     private Integer likes;
     private List<Integer> notas = new ArrayList<>();
 
-    public Disciplina(String nome, Integer likes) {
+    @OneToMany(mappedBy = "disciplina")
+    private List<Comentario> comentarios = new ArrayList<>();
+
+    public Disciplina(Long id,String nome, Integer likes) {
+        this.id = id;
         this.nome = nome;
         this.likes = likes;
+    }
+
+    public Disciplina(@JsonProperty("nome") String nome){
+        this.nome = nome;
     }
 
     public void somaLikes(){

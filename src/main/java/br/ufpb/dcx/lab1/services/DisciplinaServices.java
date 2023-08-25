@@ -4,9 +4,14 @@ import br.ufpb.dcx.lab1.dto.DisciplinaDTO;
 import br.ufpb.dcx.lab1.entities.Disciplina;
 import br.ufpb.dcx.lab1.repository.DisciplinaRepository;
 import br.ufpb.dcx.lab1.services.exceptions.DisciplinaNotFound;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -87,7 +92,7 @@ public class DisciplinaServices {
     }
 
     public Disciplina fromDto(DisciplinaDTO objDto){
-        return new Disciplina(objDto.getNome(),0);
+        return new Disciplina(null,objDto.getNome(),0);
     }
 }
 
