@@ -23,7 +23,6 @@ public class DisciplinaServices {
     public Disciplina findById(Long id) throws DisciplinaNotFound {
         Optional<Disciplina> d = repository.findById(id);
         return d.orElseThrow(() -> new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id));
-
     }
 
     public List<Disciplina> findAll() {
