@@ -2,8 +2,10 @@ package br.ufpb.dcx.lab1.config;
 
 import br.ufpb.dcx.lab1.entities.Comentario;
 import br.ufpb.dcx.lab1.entities.Disciplina;
+import br.ufpb.dcx.lab1.entities.Tag;
 import br.ufpb.dcx.lab1.repository.ComentarioRepository;
 import br.ufpb.dcx.lab1.repository.DisciplinaRepository;
+import br.ufpb.dcx.lab1.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,8 @@ public class TestConfig implements CommandLineRunner {
     private DisciplinaRepository disciplinaRepository;
     @Autowired
     private ComentarioRepository comentarioRepository;
+    @Autowired
+    private TagRepository tagRepository;
     @Override
     public void run(String... args) throws Exception {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -40,6 +44,19 @@ public class TestConfig implements CommandLineRunner {
         dis2.getComentarios().add(c2);
         dis3.getComentarios().add(c3);
         disciplinaRepository.saveAll(Arrays.asList(dis1,dis2,dis3));
+
+        Tag t1 = new Tag(null, "Ruim");
+        Tag t2 = new Tag(null, "Massante");
+        Tag t3 = new Tag(null, "Excelente");
+
+        tagRepository.saveAll(Arrays.asList(t1,t2,t3));
+
+        dis1.getTags().add(t1);
+        dis2.getTags().add(t2);
+        dis3.getTags().add(t3);
+
+        disciplinaRepository.saveAll(Arrays.asList(dis1,dis2,dis3));
+
 
     }
 }

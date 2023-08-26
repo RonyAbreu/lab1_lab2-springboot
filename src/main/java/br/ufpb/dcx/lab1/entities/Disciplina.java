@@ -3,7 +3,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Lazy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,8 +23,10 @@ public class Disciplina implements Serializable{
     private List<Integer> notas = new ArrayList<>();
 
     @OneToMany(mappedBy = "disciplina")
-    @Lazy
     private List<Comentario> comentarios = new ArrayList<>();
+
+    @ManyToMany
+    private List<Tag> tags = new ArrayList<>();
 
     public Disciplina(Long id,String nome, Integer likes) {
         this.id = id;

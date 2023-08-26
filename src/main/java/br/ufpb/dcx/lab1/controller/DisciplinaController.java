@@ -1,9 +1,13 @@
 package br.ufpb.dcx.lab1.controller;
 
+import br.ufpb.dcx.lab1.dto.ComentarioDTO;
 import br.ufpb.dcx.lab1.dto.DisciplinaDTO;
 import br.ufpb.dcx.lab1.entities.Comentario;
 import br.ufpb.dcx.lab1.entities.Disciplina;
+import br.ufpb.dcx.lab1.entities.Tag;
+import br.ufpb.dcx.lab1.services.ComentarioService;
 import br.ufpb.dcx.lab1.services.DisciplinaServices;
+import br.ufpb.dcx.lab1.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,10 @@ import java.util.List;
 public class DisciplinaController {
     @Autowired
     private DisciplinaServices disciplinaServices;
+    @Autowired
+    private ComentarioService comentarioService;
+    @Autowired
+    private TagService tagService;
 
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody DisciplinaDTO d){
@@ -61,18 +69,34 @@ public class DisciplinaController {
         return ResponseEntity.ok().body(d);
     }
 
-    @GetMapping(value = "/ranking")
-    public ResponseEntity<List<Disciplina>> findRanking(){
-        List<Disciplina> list = disciplinaServices.findRanking();
+    @GetMapping(value = "/ranking/notas")
+    public ResponseEntity<List<Disciplina>> findRankingNotas(){
+        List<Disciplina> list = disciplinaServices.findRankingNotas();
+        return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping(value = "/ranking/likes")
+    public ResponseEntity<List<Disciplina>> findRankingLikes(){
+        List<Disciplina> list = disciplinaServices.findRankingLikes();
         return ResponseEntity.ok().body(list);
     }
 
     @PostMapping(value = "/{id}/comentarios")
-    public ResponseEntity<Disciplina> addComment(@PathVariable Long id, @RequestBody Comentario comentario){
-        Disciplina disciplina = disciplinaServices.findById(id);
-        disciplina.getComentarios().add(comentario);
-        disciplinaServices.add(disciplina);
-        return ResponseEntity.ok().body(disciplina);
+    public ResponseEntity<Void> addComment(@PathVariable Long id, @RequestBody ComentarioDTO comentario){
+        Comentario c = comentarioService.fromDTO(id, comentario);
+        comentarioService.add(id,c);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @GetMapping(value = "/{id}/comentarios")
+    public ResponseEntity<List<ComentarioDTO>> findAll(@PathVariable Long id){
+        Disciplina d = disciplinaServices.findById(id);
+        return ResponseEntity.ok().body(d.getComentarios().stream().map(ComentarioDTO::new).toList());
+    }
+
+    @PostMapping(value = "/{id}/tags")
+    public ResponseEntity<Void> addTag(@PathVariable Long id, @RequestBody Tag tag){
+        tagService.add(id,tag);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }

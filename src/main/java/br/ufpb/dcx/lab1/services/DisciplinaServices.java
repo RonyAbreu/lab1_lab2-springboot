@@ -77,12 +77,21 @@ public class DisciplinaServices {
         return repository.save(novaDisciplina.get());
     }
 
-    public List<Disciplina> findRanking(){
+    public List<Disciplina> findRankingNotas(){
         List<Disciplina> list = repository.findAll();
         if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
         list.sort(Comparator.comparingInt(Disciplina::getMedia).reversed());
+        return list;
+    }
+
+    public List<Disciplina> findRankingLikes(){
+        List<Disciplina> list = repository.findAll();
+        if (list.size() == 0){
+            throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
+        }
+        list.sort(Comparator.comparingInt(Disciplina::getLikes).reversed());
         return list;
     }
 
