@@ -1,6 +1,6 @@
-package br.ufpb.dcx.lab1.dto;
+package br.ufpb.dcx.lab.dto;
 
-import br.ufpb.dcx.lab1.entities.Disciplina;
+import br.ufpb.dcx.lab.entities.Disciplina;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

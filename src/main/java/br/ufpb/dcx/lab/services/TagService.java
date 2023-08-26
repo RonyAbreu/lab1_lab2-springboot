@@ -1,15 +1,14 @@
-package br.ufpb.dcx.lab1.services;
+package br.ufpb.dcx.lab.services;
 
-import br.ufpb.dcx.lab1.entities.Disciplina;
-import br.ufpb.dcx.lab1.entities.Tag;
-import br.ufpb.dcx.lab1.repository.DisciplinaRepository;
-import br.ufpb.dcx.lab1.repository.TagRepository;
-import br.ufpb.dcx.lab1.services.exceptions.DisciplinaNotFound;
-import br.ufpb.dcx.lab1.services.exceptions.TagException;
+import br.ufpb.dcx.lab.entities.Disciplina;
+import br.ufpb.dcx.lab.entities.Tag;
+import br.ufpb.dcx.lab.repository.DisciplinaRepository;
+import br.ufpb.dcx.lab.repository.TagRepository;
+import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
+import br.ufpb.dcx.lab.services.exceptions.TagException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

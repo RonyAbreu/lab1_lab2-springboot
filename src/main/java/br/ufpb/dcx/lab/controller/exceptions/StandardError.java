@@ -1,4 +1,4 @@
-package br.ufpb.dcx.lab1.controller.exceptions;
+package br.ufpb.dcx.lab.controller.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

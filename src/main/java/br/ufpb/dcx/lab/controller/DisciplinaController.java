@@ -1,13 +1,13 @@
-package br.ufpb.dcx.lab1.controller;
+package br.ufpb.dcx.lab.controller;
 
-import br.ufpb.dcx.lab1.dto.ComentarioDTO;
-import br.ufpb.dcx.lab1.dto.DisciplinaDTO;
-import br.ufpb.dcx.lab1.entities.Comentario;
-import br.ufpb.dcx.lab1.entities.Disciplina;
-import br.ufpb.dcx.lab1.entities.Tag;
-import br.ufpb.dcx.lab1.services.ComentarioService;
-import br.ufpb.dcx.lab1.services.DisciplinaServices;
-import br.ufpb.dcx.lab1.services.TagService;
+import br.ufpb.dcx.lab.dto.ComentarioDTO;
+import br.ufpb.dcx.lab.dto.DisciplinaDTO;
+import br.ufpb.dcx.lab.entities.Comentario;
+import br.ufpb.dcx.lab.entities.Disciplina;
+import br.ufpb.dcx.lab.entities.Tag;
+import br.ufpb.dcx.lab.services.ComentarioService;
+import br.ufpb.dcx.lab.services.DisciplinaServices;
+import br.ufpb.dcx.lab.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

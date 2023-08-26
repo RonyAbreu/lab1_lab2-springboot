@@ -1,6 +1,6 @@
-package br.ufpb.dcx.lab1.repository;
+package br.ufpb.dcx.lab.repository;
 
-import br.ufpb.dcx.lab1.entities.Disciplina;
+import br.ufpb.dcx.lab.entities.Disciplina;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DisciplinaRepository extends JpaRepository<Disciplina, Long> {

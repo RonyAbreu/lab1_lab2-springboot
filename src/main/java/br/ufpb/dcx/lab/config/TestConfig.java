@@ -1,11 +1,11 @@
-package br.ufpb.dcx.lab1.config;
+package br.ufpb.dcx.lab.config;
 
-import br.ufpb.dcx.lab1.entities.Comentario;
-import br.ufpb.dcx.lab1.entities.Disciplina;
-import br.ufpb.dcx.lab1.entities.Tag;
-import br.ufpb.dcx.lab1.repository.ComentarioRepository;
-import br.ufpb.dcx.lab1.repository.DisciplinaRepository;
-import br.ufpb.dcx.lab1.repository.TagRepository;
+import br.ufpb.dcx.lab.entities.Comentario;
+import br.ufpb.dcx.lab.entities.Disciplina;
+import br.ufpb.dcx.lab.entities.Tag;
+import br.ufpb.dcx.lab.repository.ComentarioRepository;
+import br.ufpb.dcx.lab.repository.DisciplinaRepository;
+import br.ufpb.dcx.lab.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;

@@ -1,11 +1,11 @@
-package br.ufpb.dcx.lab1.services;
+package br.ufpb.dcx.lab.services;
 
-import br.ufpb.dcx.lab1.dto.ComentarioDTO;
-import br.ufpb.dcx.lab1.entities.Comentario;
-import br.ufpb.dcx.lab1.entities.Disciplina;
-import br.ufpb.dcx.lab1.repository.ComentarioRepository;
-import br.ufpb.dcx.lab1.repository.DisciplinaRepository;
-import br.ufpb.dcx.lab1.services.exceptions.DisciplinaNotFound;
+import br.ufpb.dcx.lab.dto.ComentarioDTO;
+import br.ufpb.dcx.lab.entities.Comentario;
+import br.ufpb.dcx.lab.entities.Disciplina;
+import br.ufpb.dcx.lab.repository.ComentarioRepository;
+import br.ufpb.dcx.lab.repository.DisciplinaRepository;
+import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

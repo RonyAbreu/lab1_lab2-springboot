@@ -1,4 +1,4 @@
-package br.ufpb.dcx.lab1.services.exceptions;
+package br.ufpb.dcx.lab.services.exceptions;
 
 public class DisciplinaNotFound extends RuntimeException{
     public DisciplinaNotFound(String msg){

@@ -1,6 +1,6 @@
-package br.ufpb.dcx.lab1.controller.exceptions;
+package br.ufpb.dcx.lab.controller.exceptions;
 
-import br.ufpb.dcx.lab1.services.exceptions.DisciplinaNotFound;
+import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

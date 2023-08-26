@@ -1,4 +1,4 @@
-package br.ufpb.dcx.lab1.entities;
+package br.ufpb.dcx.lab.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
