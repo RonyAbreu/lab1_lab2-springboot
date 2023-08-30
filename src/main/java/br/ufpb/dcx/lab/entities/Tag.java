@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "nomeTag")
+@EqualsAndHashCode(of = {"id", "nomeTag"})
 
 @Entity
 @Table(name = "tb_tags")
