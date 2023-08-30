@@ -29,8 +29,14 @@ public class ComentarioService {
         comentarioRepository.save(comentario);
     }
 
+    public void delete(Long disciplinaId, Long commentId){
+        Disciplina d = disciplinaRepository.getReferenceById(disciplinaId);
+        Comentario c = comentarioRepository.getReferenceById(commentId);
+        d.getComentarios().remove(c);
+        comentarioRepository.deleteById(commentId);
+    }
+
     public Comentario fromDTO(Long id,ComentarioDTO comentarioDTO){
         return new Comentario(null, LocalDate.now(), comentarioDTO.getTexto(), false,disciplinaRepository.getReferenceById(id));
     }
-
 }
