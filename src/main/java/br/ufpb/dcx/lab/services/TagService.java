@@ -28,4 +28,11 @@ public class TagService {
         d.get().getTags().add(tag);
         tagRepository.save(tag);
     }
+
+    public void delete(Long disciplinaId, Long tagId){
+        Disciplina d = disciplinaRepository.getReferenceById(disciplinaId);
+        Tag t = tagRepository.getReferenceById(tagId);
+        d.getTags().remove(t);
+        tagRepository.deleteById(tagId);
+    }
 }
