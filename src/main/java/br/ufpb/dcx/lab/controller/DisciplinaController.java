@@ -94,9 +94,21 @@ public class DisciplinaController {
         return ResponseEntity.ok().body(d.getComentarios().stream().map(ComentarioDTO::new).toList());
     }
 
+    @DeleteMapping(value = "/{disciplinaId}/comentarios/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long disciplinaId, @PathVariable Long commentId){
+        comentarioService.delete(disciplinaId,commentId);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping(value = "/{id}/tags")
     public ResponseEntity<Void> addTag(@PathVariable Long id, @RequestBody Tag tag){
         tagService.add(id,tag);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping(value = "/{disciplinaId}/tags/{tagId}")
+    public ResponseEntity<Void> deleteTag(@PathVariable Long disciplinaId, @PathVariable Long tagId){
+        tagService.delete(disciplinaId,tagId);
+        return ResponseEntity.noContent().build();
     }
 }
