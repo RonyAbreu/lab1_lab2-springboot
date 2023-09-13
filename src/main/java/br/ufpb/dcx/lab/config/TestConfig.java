@@ -3,9 +3,9 @@ package br.ufpb.dcx.lab.config;
 import br.ufpb.dcx.lab.entities.Comentario;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.entities.Tag;
-import br.ufpb.dcx.lab.repository.ComentarioRepository;
-import br.ufpb.dcx.lab.repository.DisciplinaRepository;
-import br.ufpb.dcx.lab.repository.TagRepository;
+import br.ufpb.dcx.lab.repository.ComentarioDAORepository;
+import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
+import br.ufpb.dcx.lab.repository.TagDAORepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -19,11 +19,11 @@ import java.util.Arrays;
 @Profile(value = "test")
 public class TestConfig implements CommandLineRunner {
     @Autowired
-    private DisciplinaRepository disciplinaRepository;
+    private DisciplinaDAORepository disciplinaDAORepository;
     @Autowired
-    private ComentarioRepository comentarioRepository;
+    private ComentarioDAORepository comentarioDAORepository;
     @Autowired
-    private TagRepository tagRepository;
+    private TagDAORepository tagDAORepository;
     @Override
     public void run(String... args) throws Exception {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -32,31 +32,29 @@ public class TestConfig implements CommandLineRunner {
         Disciplina dis2 = new Disciplina(null,"Matemática",0);
         Disciplina dis3 = new Disciplina(null,"História",0);
 
-        disciplinaRepository.saveAll(Arrays.asList(dis1,dis2,dis3));
+        disciplinaDAORepository.saveAll(Arrays.asList(dis1,dis2,dis3));
 
         Comentario c1 = new Comentario(null, LocalDate.parse("11/10/2000",dtf),"Eu não gosto de português",false,dis1);
         Comentario c2 = new Comentario(null, LocalDate.now(),"Muito bom",false,dis2);
         Comentario c3 = new Comentario(null, LocalDate.parse("01/01/2001",dtf),"Gostei bastante",false,dis3);
 
-        comentarioRepository.saveAll(Arrays.asList(c1,c2,c3));
+        comentarioDAORepository.saveAll(Arrays.asList(c1,c2,c3));
 
         dis1.getComentarios().add(c1);
         dis2.getComentarios().add(c2);
         dis3.getComentarios().add(c3);
-        disciplinaRepository.saveAll(Arrays.asList(dis1,dis2,dis3));
+        disciplinaDAORepository.saveAll(Arrays.asList(dis1,dis2,dis3));
 
         Tag t1 = new Tag(null, "Ruim");
         Tag t2 = new Tag(null, "Massante");
         Tag t3 = new Tag(null, "Excelente");
 
-        tagRepository.saveAll(Arrays.asList(t1,t2,t3));
+        tagDAORepository.saveAll(Arrays.asList(t1,t2,t3));
 
         dis1.getTags().add(t1);
         dis2.getTags().add(t2);
         dis3.getTags().add(t3);
 
-        disciplinaRepository.saveAll(Arrays.asList(dis1,dis2,dis3));
-
-
+        disciplinaDAORepository.saveAll(Arrays.asList(dis1,dis2,dis3));
     }
 }
