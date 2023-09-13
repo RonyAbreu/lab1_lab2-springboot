@@ -18,9 +18,12 @@ import java.util.Objects;
 public class Disciplina implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String nome;
     private Integer likes;
-    private List<Integer> notas = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "tb_notas")
+    private List<Double> notas = new ArrayList<>();
 
     @OneToMany(mappedBy = "disciplina")
     private List<Comentario> comentarios = new ArrayList<>();
@@ -38,14 +41,18 @@ public class Disciplina implements Serializable{
         this.likes++;
     }
 
-    public Integer getMedia(){
-        Integer media = 0;
-        Integer valorTotal = 0;
-        for (Integer i: notas){
+    public Double getMedia(){
+        double media = 0;
+        double valorTotal = 0;
+        for (Double i: notas){
             valorTotal+=i;
             media = valorTotal/notas.size();
         }
         return media;
+    }
+
+    public void addNotas(Double nota){
+        this.notas.add(nota);
     }
 
     @Override

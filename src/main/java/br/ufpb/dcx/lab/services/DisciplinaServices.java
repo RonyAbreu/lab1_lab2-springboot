@@ -1,8 +1,9 @@
 package br.ufpb.dcx.lab.services;
 
 import br.ufpb.dcx.lab.dto.DisciplinaDTO;
+import br.ufpb.dcx.lab.dto.NotaDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
-import br.ufpb.dcx.lab.repository.DisciplinaRepository;
+import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @Service
 public class DisciplinaServices {
     @Autowired
-    private DisciplinaRepository repository;
+    private DisciplinaDAORepository repository;
 
     public void add(Disciplina obj) {
         repository.save(obj);
@@ -54,17 +55,13 @@ public class DisciplinaServices {
         novaDisciplina.setNome(obj.getNome());
     }
 
-    public Disciplina addNota(Long id, Integer nota){
+    public Disciplina addNota(Long id, NotaDTO nota){
         Optional<Disciplina> novaDisciplina = repository.findById(id);
         if (!novaDisciplina.isPresent()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
-        updateNota(novaDisciplina, nota);
+        novaDisciplina.get().addNotas(nota.getNota());
         return repository.save(novaDisciplina.get());
-    }
-
-    private void updateNota(Optional<Disciplina> novaDisciplina, Integer nota) {
-        novaDisciplina.get().getNotas().add(nota);
     }
 
     public Disciplina addLike(Long id){
@@ -81,7 +78,7 @@ public class DisciplinaServices {
         if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
-        list.sort(Comparator.comparingInt(Disciplina::getMedia).reversed());
+        list.sort(Comparator.comparingDouble(Disciplina::getMedia).reversed());
         return list;
     }
 
@@ -96,6 +93,10 @@ public class DisciplinaServices {
 
     public Disciplina fromDto(DisciplinaDTO objDto){
         return new Disciplina(null,objDto.getNome(),0);
+    }
+
+    public List<Disciplina> findByTag(String nomeTag){
+        return repository.findByTags_NomeTagContaining(nomeTag);
     }
 }
 

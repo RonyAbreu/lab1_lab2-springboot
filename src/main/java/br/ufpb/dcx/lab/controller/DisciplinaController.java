@@ -2,19 +2,22 @@ package br.ufpb.dcx.lab.controller;
 
 import br.ufpb.dcx.lab.dto.ComentarioDTO;
 import br.ufpb.dcx.lab.dto.DisciplinaDTO;
+import br.ufpb.dcx.lab.dto.NotaDTO;
 import br.ufpb.dcx.lab.entities.Comentario;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.entities.Tag;
 import br.ufpb.dcx.lab.services.ComentarioService;
 import br.ufpb.dcx.lab.services.DisciplinaServices;
 import br.ufpb.dcx.lab.services.TagService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
 @RequestMapping(value = "/v1/api/disciplinas")
 public class DisciplinaController {
@@ -26,7 +29,7 @@ public class DisciplinaController {
     private TagService tagService;
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody DisciplinaDTO d){
+    public ResponseEntity<Void> add(@RequestBody @Valid DisciplinaDTO d){
         Disciplina obj = disciplinaServices.fromDto(d);
         disciplinaServices.add(obj);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -58,7 +61,7 @@ public class DisciplinaController {
     }
 
     @PatchMapping(value = "/{id}/nota")
-    public ResponseEntity<Disciplina> addNota(@PathVariable Long id, @RequestParam(value = "nota")Integer nota){
+    public ResponseEntity<Disciplina> addNota(@PathVariable Long id, @RequestBody NotaDTO nota){
         Disciplina d = disciplinaServices.addNota(id,nota);
         return ResponseEntity.ok().body(d);
     }
@@ -110,5 +113,10 @@ public class DisciplinaController {
     public ResponseEntity<Void> deleteTag(@PathVariable Long disciplinaId, @PathVariable Long tagId){
         tagService.delete(disciplinaId,tagId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/tags")
+    public ResponseEntity<List<Disciplina>> findByTag(@RequestParam(value = "nomeTag", defaultValue = "nome") String nomeTag){
+        return ResponseEntity.ok().body(disciplinaServices.findByTag(nomeTag));
     }
 }

@@ -1,21 +1,18 @@
 package br.ufpb.dcx.lab.controller.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
+import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
 public class StandardError {
-    private Instant timestamp;
-    private Integer status;
-    private String error;
-    private String message;
-    private String path;
+    private final String message;
+    private final Integer code;
+    private final String status;
+    private final String objectName;
+    private final List<ErrorObject> erros;
 }
