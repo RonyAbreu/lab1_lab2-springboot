@@ -19,7 +19,7 @@ public class DisciplinaServices {
     private DisciplinaDAORepository repository;
 
     public void insertDiscipline(Disciplina obj) {
-        Optional<Disciplina> discipline = repository.findByName(obj.getName());
+        Optional<Disciplina> discipline = repository.findByNameIgnoreCase(obj.getName());
 
         if (discipline.isPresent()){
             throw new DisciplinaAlreadyExistsException("Essa disciplina já foi cadastrada!");
@@ -87,7 +87,7 @@ public class DisciplinaServices {
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
 
-        newDiscipline.get().somaLikes();
+        newDiscipline.get().addLikes();
         return repository.save(newDiscipline.get());
     }
 
@@ -98,7 +98,7 @@ public class DisciplinaServices {
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
 
-        list.sort(Comparator.comparingDouble(Disciplina::calculaMedia).reversed());
+        list.sort(Comparator.comparingDouble(Disciplina::calculatesMedia).reversed());
         return list;
     }
 
