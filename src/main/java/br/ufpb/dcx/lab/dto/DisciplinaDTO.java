@@ -1,6 +1,7 @@
 package br.ufpb.dcx.lab.dto;
 
 import br.ufpb.dcx.lab.entities.Disciplina;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -13,8 +14,9 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class DisciplinaDTO implements Serializable {
-    @NotBlank(message = "{name.not.blank}")
-    @Size(min = 4, max = 30)
+    @NotBlank(message = "O campo (Nome) não pode estar vazio.")
+    @Size(min = 4, max = 30, message = "O campo nome precisa ter entre 4 e 30 caracteres.")
+    @Column(unique = true)
     private String nome;
 
     public DisciplinaDTO(Disciplina disciplina) {

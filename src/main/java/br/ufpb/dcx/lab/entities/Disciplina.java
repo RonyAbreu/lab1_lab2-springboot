@@ -19,7 +19,6 @@ import java.util.Objects;
 public class Disciplina implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
     private String nome;
     private Integer likes;
     @ElementCollection
