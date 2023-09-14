@@ -60,7 +60,7 @@ public class DisciplinaServices {
         if (!novaDisciplina.isPresent()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
-        novaDisciplina.get().addNotas(nota.getNota());
+        novaDisciplina.get().adicionaNotas(nota.getNota());
         return repository.save(novaDisciplina.get());
     }
 
@@ -78,7 +78,7 @@ public class DisciplinaServices {
         if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
-        list.sort(Comparator.comparingDouble(Disciplina::getMedia).reversed());
+        list.sort(Comparator.comparingDouble(Disciplina::calculaMedia).reversed());
         return list;
     }
 

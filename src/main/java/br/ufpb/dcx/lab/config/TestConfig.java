@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @Profile(value = "test")
@@ -56,5 +58,10 @@ public class TestConfig implements CommandLineRunner {
         dis3.getTags().add(t3);
 
         disciplinaDAORepository.saveAll(Arrays.asList(dis1,dis2,dis3));
+
+        List<Double> notas1 = new ArrayList<>(Arrays.asList(7.7,10.0,8.4));
+        dis1.getNotas().addAll(notas1);
+
+        disciplinaDAORepository.save(dis1);
     }
 }

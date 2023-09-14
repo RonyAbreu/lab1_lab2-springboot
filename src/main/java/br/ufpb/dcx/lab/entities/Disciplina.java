@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -41,7 +42,12 @@ public class Disciplina implements Serializable{
         this.likes++;
     }
 
-    public Double getMedia(){
+    public String getMedia(){
+        String media = formataMedia(calculaMedia());
+        return media;
+    }
+
+    public Double calculaMedia(){
         double media = 0;
         double valorTotal = 0;
         for (Double i: notas){
@@ -51,7 +57,11 @@ public class Disciplina implements Serializable{
         return media;
     }
 
-    public void addNotas(Double nota){
+    public String formataMedia(Double media){
+        return new DecimalFormat("##.##").format(media);
+    }
+
+    public void adicionaNotas(Double nota){
         this.notas.add(nota);
     }
 
