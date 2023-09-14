@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id", "nomeTag"})
+@EqualsAndHashCode(of = {"id", "name"})
 
 @Entity
 @Table(name = "tb_tags")
@@ -19,14 +19,14 @@ public class Tag implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nomeTag;
+    private String name;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "tags")
     private List<Disciplina> disciplinas = new ArrayList<>();
 
-    public Tag(Long id, String nomeTag) {
+    public Tag(Long id, String name) {
         this.id = id;
-        this.nomeTag = nomeTag;
+        this.name = name;
     }
 }

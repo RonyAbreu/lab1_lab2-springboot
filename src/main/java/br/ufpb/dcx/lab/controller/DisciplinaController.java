@@ -30,8 +30,8 @@ public class DisciplinaController {
 
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody @Valid DisciplinaDTO d){
-        Disciplina obj = disciplinaServices.fromDto(d);
-        disciplinaServices.add(obj);
+        Disciplina obj = disciplinaServices.dtoFromDiscipline(d);
+        disciplinaServices.insertDiscipline(obj);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -49,26 +49,26 @@ public class DisciplinaController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
-        disciplinaServices.delete(id);
+        disciplinaServices.deleteDiscipline(id);
         HttpStatus status = HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(status);
     }
 
-    @PutMapping(value = "/{id}/update")
+    @PutMapping(value = "/{id}/updateDiscipline")
     public ResponseEntity<Disciplina> update(@PathVariable Long id, @RequestBody Disciplina obj){
-        Disciplina d = disciplinaServices.update(obj,id);
+        Disciplina d = disciplinaServices.updateDiscipline(obj,id);
         return ResponseEntity.ok().body(d);
     }
 
     @PatchMapping(value = "/{id}/nota")
     public ResponseEntity<Disciplina> addNota(@PathVariable Long id, @RequestBody NotaDTO nota){
-        Disciplina d = disciplinaServices.addNota(id,nota);
+        Disciplina d = disciplinaServices.insertNota(id,nota);
         return ResponseEntity.ok().body(d);
     }
 
     @PatchMapping(value = "/{id}/like")
     public ResponseEntity<Disciplina> addLike(@PathVariable Long id){
-        Disciplina d = disciplinaServices.addLike(id);
+        Disciplina d = disciplinaServices.insertLike(id);
         return ResponseEntity.ok().body(d);
     }
 
@@ -86,8 +86,8 @@ public class DisciplinaController {
 
     @PostMapping(value = "/{id}/comentarios")
     public ResponseEntity<Void> addComment(@PathVariable Long id, @RequestBody ComentarioDTO comentario){
-        Comentario c = comentarioService.fromDTO(id, comentario);
-        comentarioService.add(id,c);
+        Comentario c = comentarioService.dtoFromComment(id, comentario);
+        comentarioService.insertComment(id,c);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -99,24 +99,19 @@ public class DisciplinaController {
 
     @DeleteMapping(value = "/{disciplinaId}/comentarios/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long disciplinaId, @PathVariable Long commentId){
-        comentarioService.delete(disciplinaId,commentId);
+        comentarioService.deleteComment(disciplinaId,commentId);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping(value = "/{id}/tags")
     public ResponseEntity<Void> addTag(@PathVariable Long id, @RequestBody Tag tag){
-        tagService.add(id,tag);
+        tagService.insertTag(id,tag);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping(value = "/{disciplinaId}/tags/{tagId}")
     public ResponseEntity<Void> deleteTag(@PathVariable Long disciplinaId, @PathVariable Long tagId){
-        tagService.delete(disciplinaId,tagId);
+        tagService.deleteTag(disciplinaId,tagId);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping(value = "/tags")
-    public ResponseEntity<List<Disciplina>> findByTag(@RequestParam(value = "nomeTag", defaultValue = "nome") String nomeTag){
-        return ResponseEntity.ok().body(disciplinaServices.findByTag(nomeTag));
     }
 }

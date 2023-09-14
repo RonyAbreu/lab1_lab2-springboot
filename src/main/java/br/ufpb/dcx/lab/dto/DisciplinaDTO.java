@@ -15,11 +15,11 @@ import java.io.Serializable;
 @Setter
 public class DisciplinaDTO implements Serializable {
     @NotBlank(message = "O campo (Nome) não pode estar vazio.")
-    @Size(min = 4, max = 30, message = "O campo nome precisa ter entre 4 e 30 caracteres.")
+    @Size(min = 4, max = 30, message = "O campo name precisa ter entre 4 e 30 caracteres.")
     @Column(unique = true)
-    private String nome;
+    private String name;
 
     public DisciplinaDTO(Disciplina disciplina) {
-        this.nome = disciplina.getNome();
+        this.name = disciplina.getName();
     }
 }

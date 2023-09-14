@@ -13,11 +13,11 @@ import java.io.Serializable;
 @Setter
 
 public class ComentarioDTO implements Serializable {
-    @NotBlank(message = "Insira o texto no comentário.")
-    @Size(min = 1, max = 255, message = "Seu texto excedeu o limite de caracteres")
-    private String texto;
+    @NotBlank(message = "Insira o text no comentário.")
+    @Size(min = 1, max = 255, message = "Seu text excedeu o limite de caracteres")
+    private String text;
 
     public ComentarioDTO(Comentario comentario) {
-        this.texto = comentario.getTexto();
+        this.text = comentario.getText();
     }
 }

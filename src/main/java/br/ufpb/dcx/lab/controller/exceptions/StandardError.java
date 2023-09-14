@@ -6,9 +6,11 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class StandardError implements Serializable {
-    private final Instant timestamp;
-    private final String message;
-    private final Integer code;
+    private Instant timestamp;
+    private String message;
+    private Integer code;
 }

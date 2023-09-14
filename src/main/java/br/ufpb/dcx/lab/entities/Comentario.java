@@ -18,9 +18,9 @@ import java.time.LocalDate;
 public class Comentario implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate dataDoComentario;
-    private String texto;
-    private boolean removido;
+    private LocalDate dateComment;
+    private String text;
+    private boolean remove;
 
     @ManyToOne
     @JoinColumn(name = "disciplina_id")

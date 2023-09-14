@@ -19,7 +19,7 @@ import java.util.Objects;
 public class Disciplina implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
+    private String name;
     private Integer likes;
     @ElementCollection
     @CollectionTable(name = "tb_notas")
@@ -31,9 +31,9 @@ public class Disciplina implements Serializable{
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
 
-    public Disciplina(Long id,String nome, Integer likes) {
+    public Disciplina(Long id, String name, Integer likes) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.likes = likes;
     }
 
@@ -69,11 +69,11 @@ public class Disciplina implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Disciplina that = (Disciplina) o;
-        return id.equals(that.id) && nome.equals(that.nome);
+        return id.equals(that.id) && name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome);
+        return Objects.hash(id, name);
     }
 }

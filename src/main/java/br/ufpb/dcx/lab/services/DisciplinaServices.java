@@ -17,86 +17,97 @@ public class DisciplinaServices {
     @Autowired
     private DisciplinaDAORepository repository;
 
-    public void add(Disciplina obj) {
+    public void insertDiscipline(Disciplina obj) {
         repository.save(obj);
     }
 
     public Disciplina findById(Long id) throws DisciplinaNotFound {
-        Optional<Disciplina> d = repository.findById(id);
-        return d.orElseThrow(() -> new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id));
+        Optional<Disciplina> discipline = repository.findById(id);
+
+        return discipline.orElseThrow(() -> new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id));
     }
 
     public List<Disciplina> findAll() {
         List<Disciplina> list = repository.findAll();
+
         if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
+
         return repository.findAll();
     }
 
-    public void delete(Long id) {
-        Optional<Disciplina> d = Optional.ofNullable(findById(id));
-        if (!d.isPresent()){
+    public void deleteDiscipline(Long id) {
+        Optional<Disciplina> discipline = Optional.ofNullable(findById(id));
+
+        if (discipline.isEmpty()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
+
         repository.deleteById(id);
     }
 
-    public Disciplina update(Disciplina obj, Long id) {
-        Optional<Disciplina> novaDisciplina = repository.findById(id);
-        if (!novaDisciplina.isPresent()){
+    public Disciplina updateDiscipline(Disciplina discipline, Long id) {
+        Optional<Disciplina> newDiscipline = repository.findById(id);
+
+        if (newDiscipline.isEmpty()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
-        updateDisciplina(novaDisciplina.get(), obj);
-        return repository.save(novaDisciplina.get());
+
+        updateDiscipline(newDiscipline.get(), discipline);
+        return repository.save(newDiscipline.get());
     }
 
-    private void updateDisciplina(Disciplina novaDisciplina, Disciplina obj) {
-        novaDisciplina.setNome(obj.getNome());
+    private void updateDiscipline(Disciplina newDiscipline, Disciplina discipline) {
+        newDiscipline.setName(discipline.getName());
     }
 
-    public Disciplina addNota(Long id, NotaDTO nota){
-        Optional<Disciplina> novaDisciplina = repository.findById(id);
-        if (!novaDisciplina.isPresent()){
+    public Disciplina insertNota(Long id, NotaDTO note){
+        Optional<Disciplina> newDiscipline = repository.findById(id);
+
+        if (newDiscipline.isEmpty()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
-        novaDisciplina.get().adicionaNotas(nota.getNota());
-        return repository.save(novaDisciplina.get());
+
+        newDiscipline.get().adicionaNotas(note.getNote());
+        return repository.save(newDiscipline.get());
     }
 
-    public Disciplina addLike(Long id){
-        Optional<Disciplina> novaDisciplina = repository.findById(id);
-        if (!novaDisciplina.isPresent()){
+    public Disciplina insertLike(Long id){
+        Optional<Disciplina> newDiscipline = repository.findById(id);
+
+        if (newDiscipline.isEmpty()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
-        novaDisciplina.get().somaLikes();
-        return repository.save(novaDisciplina.get());
+
+        newDiscipline.get().somaLikes();
+        return repository.save(newDiscipline.get());
     }
 
     public List<Disciplina> findRankingNotas(){
         List<Disciplina> list = repository.findAll();
+
         if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
+
         list.sort(Comparator.comparingDouble(Disciplina::calculaMedia).reversed());
         return list;
     }
 
     public List<Disciplina> findRankingLikes(){
         List<Disciplina> list = repository.findAll();
+
         if (list.size() == 0){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
+
         list.sort(Comparator.comparingInt(Disciplina::getLikes).reversed());
         return list;
     }
 
-    public Disciplina fromDto(DisciplinaDTO objDto){
-        return new Disciplina(null,objDto.getNome(),0);
-    }
-
-    public List<Disciplina> findByTag(String nomeTag){
-        return repository.findByTags_NomeTagContaining(nomeTag);
+    public Disciplina dtoFromDiscipline(DisciplinaDTO disciplineDto){
+        return new Disciplina(null, disciplineDto.getName(),0);
     }
 }
 

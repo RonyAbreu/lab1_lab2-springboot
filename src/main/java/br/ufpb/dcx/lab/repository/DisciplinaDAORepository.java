@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DisciplinaDAORepository extends JpaRepository<Disciplina, Long> {
-    List<Disciplina> findByTags_NomeTagContaining(String nomeTag);
 }
