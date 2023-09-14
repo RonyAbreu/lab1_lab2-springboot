@@ -13,4 +13,5 @@ public class StandardError implements Serializable {
     private Instant timestamp;
     private String message;
     private Integer code;
+    private String path;
 }
