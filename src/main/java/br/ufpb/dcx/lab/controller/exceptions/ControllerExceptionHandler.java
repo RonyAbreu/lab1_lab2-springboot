@@ -20,25 +20,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 
     @ExceptionHandler(DisciplinaNotFound.class)
     public ResponseEntity<StandardError> disciplinaNotFound(DisciplinaNotFound e, HttpServletRequest request){
-        String error = "Not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
-        StandardError err = new StandardError(error,status.value(),status.getReasonPhrase());
+        StandardError err = new StandardError(Instant.now(),e.getMessage(),status.value());
         return ResponseEntity.status(status).body(err);
-    }
-
-
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
-        List<ErrorObject> errors = getErros(ex);
-        StandardError errorResponse = getErrorResponse(ex,status,errors);
-        return ResponseEntity.status(status).body(errorResponse);
-    }
-
-    private List<ErrorObject> getErros(MethodArgumentNotValidException ex){
-        return ex.getBindingResult().getFieldErrors()
-                .stream().map(error -> new ErrorObject(error.getDefaultMessage(),error.getField())).toList();
-    }
-
-    private StandardError getErrorResponse(MethodArgumentNotValidException ex, HttpStatus status, List<ErrorObject> erros){
-        return new StandardError("Requisição possui campos inválidos", status.value(),status.getReasonPhrase(),ex.getBindingResult().getObjectName(),erros);
     }
 }
