@@ -1,7 +1,4 @@
-1 - dividir o controller em 2 (disciplina / comentarios)
-2 - alterar o endpoint do controller (v1/api/)
-3 - criar a classe TagDTO
-4 - mandar somente DTO do service para controller
-5 - adicionar endpoint que busca Disciplinas pelo nome da Tag
-6 - adicionar entidade User e fazer relacionamento
-7 - utilizar jwt para autorizar e autenticar o User
+- mandar somente DTO do service para controller
+- adicionar endpoint que busca Disciplinas pelo nome da Tag
+- adicionar entidade User e fazer relacionamento
+- utilizar jwt para autorizar e autenticar o User
