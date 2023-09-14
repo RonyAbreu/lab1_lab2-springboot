@@ -1,6 +1,6 @@
 package br.ufpb.dcx.lab.services;
 
-import br.ufpb.dcx.lab.dto.ComentarioDTO;
+import br.ufpb.dcx.lab.dto.comentario.ComentarioDTO;
 import br.ufpb.dcx.lab.entities.Comentario;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.repository.ComentarioDAORepository;

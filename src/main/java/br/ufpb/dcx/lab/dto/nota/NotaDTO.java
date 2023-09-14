@@ -1,4 +1,4 @@
-package br.ufpb.dcx.lab.dto;
+package br.ufpb.dcx.lab.dto.nota;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

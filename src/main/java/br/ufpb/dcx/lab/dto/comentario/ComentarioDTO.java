@@ -1,4 +1,4 @@
-package br.ufpb.dcx.lab.dto;
+package br.ufpb.dcx.lab.dto.comentario;
 
 import br.ufpb.dcx.lab.entities.Comentario;
 import jakarta.validation.constraints.NotBlank;
