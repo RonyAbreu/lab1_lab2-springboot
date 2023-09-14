@@ -16,7 +16,6 @@ import java.io.Serializable;
 public class DisciplinaDTO implements Serializable {
     @NotBlank(message = "O campo (Nome) não pode estar vazio.")
     @Size(min = 4, max = 30, message = "O campo name precisa ter entre 4 e 30 caracteres.")
-    @Column(unique = true)
     private String name;
 
     public DisciplinaDTO(Disciplina disciplina) {
