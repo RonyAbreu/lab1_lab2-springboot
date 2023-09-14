@@ -38,16 +38,16 @@ public class Disciplina implements Serializable{
         this.likes = likes;
     }
 
-    public void somaLikes(){
+    public void addLikes(){
         this.likes++;
     }
 
     public String getMedia(){
-        String media = formataMedia(calculaMedia());
+        String media = formatMedia(calculatesMedia());
         return media;
     }
 
-    public Double calculaMedia(){
+    public Double calculatesMedia(){
         double media = 0;
         double valorTotal = 0;
         for (Double i: notas){
@@ -61,11 +61,11 @@ public class Disciplina implements Serializable{
         return tags.contains(tag);
     }
 
-    public String formataMedia(Double media){
+    public String formatMedia(Double media){
         return new DecimalFormat("##.##").format(media);
     }
 
-    public void adicionaNotas(Double nota){
+    public void addNotas(Double nota){
         this.notas.add(nota);
     }
 

@@ -76,7 +76,7 @@ public class DisciplinaServices {
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
 
-        newDiscipline.get().adicionaNotas(note.getNote());
+        newDiscipline.get().addNotas(note.getNote());
         return repository.save(newDiscipline.get());
     }
 
