@@ -7,11 +7,11 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id", "name"})
 
 @Entity
 @Table(name = "tb_tags")
@@ -28,5 +28,18 @@ public class Tag implements Serializable {
     public Tag(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tag tag = (Tag) o;
+        return name.equals(tag.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

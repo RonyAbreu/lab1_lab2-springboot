@@ -5,7 +5,7 @@ import br.ufpb.dcx.lab.entities.Tag;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
 import br.ufpb.dcx.lab.repository.TagDAORepository;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
-import br.ufpb.dcx.lab.services.exceptions.TagException;
+import br.ufpb.dcx.lab.services.exceptions.TagAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +23,12 @@ public class TagService {
 
         if (discipline.isEmpty()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
-        } else if(containsTag(discipline,tag)){
-            throw new TagException("Essa Disciplina já Possui essa Tag!");
+        } else if(discipline.get().containsTag(tag)){
+            throw new TagAlreadyExistsException("Essa Disciplina já Possui essa Tag!");
         }
 
         discipline.get().getTags().add(tag);
         tagDAORepository.save(tag);
-    }
-
-    private boolean containsTag(Optional<Disciplina> obj, Tag tag){
-        return obj.get().getTags().contains(tag);
     }
 
     public void deleteTag(Long disciplinaId, Long tagId){

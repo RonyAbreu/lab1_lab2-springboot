@@ -57,6 +57,10 @@ public class Disciplina implements Serializable{
         return media;
     }
 
+    public boolean containsTag(Tag tag){
+        return tags.contains(tag);
+    }
+
     public String formataMedia(Double media){
         return new DecimalFormat("##.##").format(media);
     }
@@ -70,11 +74,11 @@ public class Disciplina implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Disciplina that = (Disciplina) o;
-        return id.equals(that.id) && name.equals(that.name);
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(name);
     }
 }

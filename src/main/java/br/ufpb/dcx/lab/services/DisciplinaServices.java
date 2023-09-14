@@ -4,6 +4,7 @@ import br.ufpb.dcx.lab.dto.DisciplinaDTO;
 import br.ufpb.dcx.lab.dto.NotaDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
+import br.ufpb.dcx.lab.services.exceptions.DisciplinaAlreadyExistsException;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,12 @@ public class DisciplinaServices {
     private DisciplinaDAORepository repository;
 
     public void insertDiscipline(Disciplina obj) {
+        Optional<Disciplina> discipline = repository.findByName(obj.getName());
+
+        if (discipline.isPresent()){
+            throw new DisciplinaAlreadyExistsException("Essa disciplina já foi cadastrada!");
+        }
+
         repository.save(obj);
     }
 
