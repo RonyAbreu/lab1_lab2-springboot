@@ -4,7 +4,6 @@ import br.ufpb.dcx.lab.dto.disciplina.DisciplinaRegisterDTO;
 import br.ufpb.dcx.lab.dto.nota.NotaDTO;
 import br.ufpb.dcx.lab.dto.tag.TagDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
-import br.ufpb.dcx.lab.entities.Tag;
 import br.ufpb.dcx.lab.services.DisciplinaServices;
 import br.ufpb.dcx.lab.services.TagService;
 import jakarta.validation.Valid;
@@ -23,7 +22,7 @@ public class DisciplinaController {
     private TagService tagService;
 
     @PostMapping(value = "/disciplina")
-    public ResponseEntity<Void> add(@RequestBody @Valid DisciplinaRegisterDTO obj){
+    public ResponseEntity<Void> insert(@RequestBody @Valid DisciplinaRegisterDTO obj){
         disciplinaServices.insertDiscipline(obj);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
