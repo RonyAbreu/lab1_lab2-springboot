@@ -40,7 +40,7 @@ public class ControllerExceptionHandler{
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<StandardError> dataIntegityError(DataIntegrityViolationException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> dataIntegrityError(DataIntegrityViolationException e, HttpServletRequest request){
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError(Instant.now(),e.getMessage(),status.value(),request.getRequestURI());
         return ResponseEntity.status(status).body(err);
