@@ -121,5 +121,9 @@ public class DisciplinaServices {
     public List<Disciplina> findByTagName(String tagName){
         return repository.findByTagsNameIgnoreCase(tagName);
     }
+
+    public List<Disciplina> findByName(String name){
+        return repository.findByNameContainingIgnoreCase(name);
+    }
 }
 
