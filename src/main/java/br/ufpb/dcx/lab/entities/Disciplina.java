@@ -1,4 +1,5 @@
 package br.ufpb.dcx.lab.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Disciplina implements Serializable{
     @CollectionTable(name = "tb_notas")
     private List<Double> notas = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "disciplina")
     private List<Comentario> comentarios = new ArrayList<>();
 
