@@ -117,5 +117,9 @@ public class DisciplinaServices {
     public Disciplina dtoFromDiscipline(DisciplinaRegisterDTO disciplineDto){
         return new Disciplina(null, disciplineDto.getName(),0);
     }
+
+    public List<Disciplina> findByTagName(String tagName){
+        return repository.findByTagsNameIgnoreCase(tagName);
+    }
 }
 

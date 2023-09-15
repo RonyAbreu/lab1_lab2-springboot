@@ -1,3 +1,2 @@
-- adicionar endpoint que busca Disciplinas pelo nome da Tag
 - adicionar entidade User e fazer relacionamento
 - utilizar jwt para autorizar e autenticar o User

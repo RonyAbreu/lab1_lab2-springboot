@@ -1,5 +1,6 @@
 package br.ufpb.dcx.lab.repository;
 
+import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.entities.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -73,4 +73,9 @@ public class DisciplinaController {
         List<Disciplina> list = disciplinaServices.findRankingLikes();
         return ResponseEntity.ok().body(list);
     }
+
+    @GetMapping(value = "/disciplina/search/tags")
+    public ResponseEntity<List<Disciplina>> findTagName(@RequestParam(value = "tagName",defaultValue = "q") String tagName){
+        return ResponseEntity.ok().body(disciplinaServices.findByTagName(tagName));
+    }
 }
