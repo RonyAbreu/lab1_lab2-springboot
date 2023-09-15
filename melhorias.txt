@@ -1,2 +1,3 @@
+- tratar a exceção dos métodos que retornam uma lista de Disciplinas
 - adicionar entidade User e fazer relacionamento
 - utilizar jwt para autorizar e autenticar o User
