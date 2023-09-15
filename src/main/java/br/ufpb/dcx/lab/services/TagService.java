@@ -43,7 +43,6 @@ public class TagService {
 
         Tag tag = tagDAORepository.getReferenceById(tagId);
 
-        discipline.getTags().remove(tag);
         tagDAORepository.deleteById(tagId);
     }
 }

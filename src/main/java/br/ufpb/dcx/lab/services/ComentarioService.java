@@ -42,7 +42,6 @@ public class ComentarioService {
 
         Comentario c = comentarioDAORepository.getReferenceById(commentId);
 
-        d.getComentarios().remove(c);
         comentarioDAORepository.deleteById(commentId);
     }
 }
