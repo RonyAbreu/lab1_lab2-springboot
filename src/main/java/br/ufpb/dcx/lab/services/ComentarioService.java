@@ -20,15 +20,21 @@ public class ComentarioService {
     @Autowired
     DisciplinaDAORepository disciplinaDAORepository;
 
-    public void insertComment(Long id, Comentario comentario){
+    public void insertComment(Long id, ComentarioDTO comentario){
         Optional<Disciplina> discipline = disciplinaDAORepository.findById(id);
 
         if (discipline.isEmpty()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
         }
 
-        discipline.get().getComentarios().add(comentario);
-        comentarioDAORepository.save(comentario);
+        Comentario comentarioSave = comentarioDtoFromComentario(id, comentario);
+
+        discipline.get().getComentarios().add(comentarioSave);
+        comentarioDAORepository.save(comentarioSave);
+    }
+
+    private Comentario comentarioDtoFromComentario(Long id,ComentarioDTO comentarioDTO){
+        return new Comentario(null,LocalDate.now(),comentarioDTO.getText(),false,disciplinaDAORepository.getReferenceById(id));
     }
 
     public void deleteComment(Long disciplinaId, Long commentId){
@@ -38,9 +44,5 @@ public class ComentarioService {
 
         d.getComentarios().remove(c);
         comentarioDAORepository.deleteById(commentId);
-    }
-
-    public Comentario dtoFromComment(Long id, ComentarioDTO comentarioDTO){
-        return new Comentario(null, LocalDate.now(), comentarioDTO.getText(), false, disciplinaDAORepository.getReferenceById(id));
     }
 }

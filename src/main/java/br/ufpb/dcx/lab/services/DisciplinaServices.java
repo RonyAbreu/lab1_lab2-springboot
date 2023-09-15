@@ -1,7 +1,7 @@
 package br.ufpb.dcx.lab.services;
 
-import br.ufpb.dcx.lab.dto.DisciplinaDTO;
-import br.ufpb.dcx.lab.dto.NotaDTO;
+import br.ufpb.dcx.lab.dto.disciplina.DisciplinaRegisterDTO;
+import br.ufpb.dcx.lab.dto.nota.NotaDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaAlreadyExistsException;
@@ -18,14 +18,15 @@ public class DisciplinaServices {
     @Autowired
     private DisciplinaDAORepository repository;
 
-    public void insertDiscipline(Disciplina obj) {
+    public void insertDiscipline(DisciplinaRegisterDTO obj) {
         Optional<Disciplina> discipline = repository.findByNameIgnoreCase(obj.getName());
 
         if (discipline.isPresent()){
             throw new DisciplinaAlreadyExistsException("Essa disciplina já foi cadastrada!");
         }
 
-        repository.save(obj);
+        Disciplina disciplinaSave = dtoFromDiscipline(obj);
+        repository.save(disciplinaSave);
     }
 
     public Disciplina findById(Long id) throws DisciplinaNotFound {
@@ -54,7 +55,7 @@ public class DisciplinaServices {
         repository.deleteById(id);
     }
 
-    public Disciplina updateDiscipline(Disciplina discipline, Long id) {
+    public Disciplina updateDiscipline(DisciplinaRegisterDTO discipline, Long id) {
         Optional<Disciplina> newDiscipline = repository.findById(id);
 
         if (newDiscipline.isEmpty()){
@@ -65,7 +66,7 @@ public class DisciplinaServices {
         return repository.save(newDiscipline.get());
     }
 
-    private void updateDiscipline(Disciplina newDiscipline, Disciplina discipline) {
+    private void updateDiscipline(Disciplina newDiscipline, DisciplinaRegisterDTO discipline) {
         newDiscipline.setName(discipline.getName());
     }
 
@@ -113,7 +114,7 @@ public class DisciplinaServices {
         return list;
     }
 
-    public Disciplina dtoFromDiscipline(DisciplinaDTO disciplineDto){
+    public Disciplina dtoFromDiscipline(DisciplinaRegisterDTO disciplineDto){
         return new Disciplina(null, disciplineDto.getName(),0);
     }
 }

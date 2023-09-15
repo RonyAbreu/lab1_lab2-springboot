@@ -20,8 +20,4 @@ public class DisciplinaRegisterDTO implements Serializable {
     public DisciplinaRegisterDTO(String name) {
         this.name = name;
     }
-
-    public Disciplina disciplinaRegisterDtoToUser() {
-        return new Disciplina(name);
-    }
 }

@@ -1,5 +1,6 @@
 package br.ufpb.dcx.lab.services;
 
+import br.ufpb.dcx.lab.dto.tag.TagDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.entities.Tag;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
@@ -18,17 +19,23 @@ public class TagService {
     @Autowired
     private DisciplinaDAORepository disciplinaDAORepository;
 
-    public void insertTag(Long id, Tag tag){
+    public void insertTag(Long id, TagDTO tag){
         Optional<Disciplina> discipline = disciplinaDAORepository.findById(id);
+
+        Tag tagSave = tagDtoFromTag(tag);
 
         if (discipline.isEmpty()){
             throw new DisciplinaNotFound("Não foi encontrada disciplina com esse id: "+ id);
-        } else if(discipline.get().containsTag(tag)){
+        } else if(discipline.get().containsTag(tagSave)){
             throw new TagAlreadyExistsException("Essa Disciplina já Possui essa Tag!");
         }
 
-        discipline.get().getTags().add(tag);
-        tagDAORepository.save(tag);
+        discipline.get().getTags().add(tagSave);
+        tagDAORepository.save(tagSave);
+    }
+
+    private Tag tagDtoFromTag(TagDTO tagDTO){
+        return new Tag(null, tagDTO.getTagName());
     }
 
     public void deleteTag(Long disciplinaId, Long tagId){

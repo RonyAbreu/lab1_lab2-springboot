@@ -22,8 +22,7 @@ public class ComentarioController {
 
     @PostMapping(value = "/disciplina/{id}/comentarios")
     public ResponseEntity<Void> addComment(@PathVariable Long id, @RequestBody ComentarioDTO comentario){
-        Comentario c = comentarioService.dtoFromComment(id, comentario);
-        comentarioService.insertComment(id,c);
+        comentarioService.insertComment(id,comentario);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

@@ -1,19 +1,16 @@
 package br.ufpb.dcx.lab.controller;
 
-import br.ufpb.dcx.lab.dto.ComentarioDTO;
-import br.ufpb.dcx.lab.dto.DisciplinaDTO;
-import br.ufpb.dcx.lab.dto.NotaDTO;
-import br.ufpb.dcx.lab.entities.Comentario;
+import br.ufpb.dcx.lab.dto.disciplina.DisciplinaRegisterDTO;
+import br.ufpb.dcx.lab.dto.nota.NotaDTO;
+import br.ufpb.dcx.lab.dto.tag.TagDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.entities.Tag;
-import br.ufpb.dcx.lab.services.ComentarioService;
 import br.ufpb.dcx.lab.services.DisciplinaServices;
 import br.ufpb.dcx.lab.services.TagService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +23,7 @@ public class DisciplinaController {
     private TagService tagService;
 
     @PostMapping(value = "/disciplina")
-    public ResponseEntity<Void> add(@RequestBody @Valid DisciplinaDTO d){
-        Disciplina obj = disciplinaServices.dtoFromDiscipline(d);
+    public ResponseEntity<Void> add(@RequestBody @Valid DisciplinaRegisterDTO obj){
         disciplinaServices.insertDiscipline(obj);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -52,7 +48,7 @@ public class DisciplinaController {
     }
 
     @PutMapping(value = "/disciplina/{id}/update")
-    public ResponseEntity<Disciplina> update(@PathVariable Long id, @RequestBody Disciplina obj){
+    public ResponseEntity<Disciplina> update(@PathVariable Long id, @RequestBody DisciplinaRegisterDTO obj){
         Disciplina d = disciplinaServices.updateDiscipline(obj,id);
         return ResponseEntity.ok().body(d);
     }
@@ -81,8 +77,8 @@ public class DisciplinaController {
         return ResponseEntity.ok().body(list);
     }
 
-    @PostMapping(value = "/{id}/tags")
-    public ResponseEntity<Void> addTag(@PathVariable Long id, @RequestBody Tag tag){
+    @PostMapping(value = "/disciplina/{id}/tags")
+    public ResponseEntity<Void> addTag(@PathVariable Long id, @RequestBody TagDTO tag){
         tagService.insertTag(id,tag);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
