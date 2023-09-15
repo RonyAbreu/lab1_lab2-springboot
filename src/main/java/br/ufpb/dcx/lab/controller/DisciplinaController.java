@@ -18,8 +18,6 @@ import java.util.List;
 public class DisciplinaController {
     @Autowired
     private DisciplinaServices disciplinaServices;
-    @Autowired
-    private TagService tagService;
 
     @PostMapping(value = "/disciplina")
     public ResponseEntity<Void> insert(@RequestBody @Valid DisciplinaRegisterDTO obj){
@@ -74,17 +72,5 @@ public class DisciplinaController {
     public ResponseEntity<List<Disciplina>> findRankingLikes(){
         List<Disciplina> list = disciplinaServices.findRankingLikes();
         return ResponseEntity.ok().body(list);
-    }
-
-    @PostMapping(value = "/disciplina/{id}/tags")
-    public ResponseEntity<Void> addTag(@PathVariable Long id, @RequestBody TagDTO tag){
-        tagService.insertTag(id,tag);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @DeleteMapping(value = "/{disciplinaId}/tags/{tagId}")
-    public ResponseEntity<Void> deleteTag(@PathVariable Long disciplinaId, @PathVariable Long tagId){
-        tagService.deleteTag(disciplinaId,tagId);
-        return ResponseEntity.noContent().build();
     }
 }
