@@ -15,11 +15,13 @@ import java.util.Optional;
 public class UsuarioService {
 
     private UsuarioRepository repository;
+    private JWTService jwtService;
 
     @Autowired
 
-    public UsuarioService(UsuarioRepository repository) {
+    public UsuarioService(UsuarioRepository repository, JWTService jwtService) {
         this.repository = repository;
+        this.jwtService = jwtService;
     }
 
     public Usuario cadastraUsuario(UsuarioDeRegistro usuarioDeRegistro){
@@ -39,7 +41,7 @@ public class UsuarioService {
     }
 
     private boolean usuarioTemPermissao(String header, String email){
-        String sujeitoDoToken = " ";
+        String sujeitoDoToken = jwtService.pegaSujeitoDoToken(header);
         Optional<Usuario> usuarioOptional = repository.findByEmail(sujeitoDoToken);
         return usuarioOptional.isPresent() && usuarioOptional.get().getEmail().equals(email);
     }
