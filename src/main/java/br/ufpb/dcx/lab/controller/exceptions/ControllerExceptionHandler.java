@@ -1,8 +1,6 @@
 package br.ufpb.dcx.lab.controller.exceptions;
 
-import br.ufpb.dcx.lab.services.exceptions.DisciplinaAlreadyExistsException;
-import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
-import br.ufpb.dcx.lab.services.exceptions.TagAlreadyExistsException;
+import br.ufpb.dcx.lab.services.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -61,4 +59,40 @@ public class ControllerExceptionHandler{
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
+
+    @ExceptionHandler(UsuarioJaExisteException.class)
+    public ResponseEntity<StandardError> usuarioJaExisteError(UsuarioJaExisteException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.CONFLICT;
+        StandardError err = new StandardError(Instant.now(),e.getMessage(),status.value(),request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(UsuarioNaoExisteException.class)
+    public ResponseEntity<StandardError> usuarioNaoExisteError(UsuarioNaoExisteException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError err = new StandardError(Instant.now(),e.getMessage(),status.value(),request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(LoginInvalidoException.class)
+    public ResponseEntity<StandardError> loginInvalidoError(LoginInvalidoException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(),e.getMessage(),status.value(),request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(UsuarioNaoTemPermissaoException.class)
+    public ResponseEntity<StandardError> usuarioNaoTemPermissaoError(UsuarioNaoTemPermissaoException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        StandardError err = new StandardError(Instant.now(),e.getMessage(),status.value(),request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(SecurityException.class)
+    public ResponseEntity<StandardError> erroDeSegurancaDoToken(SecurityException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        StandardError err = new StandardError(Instant.now(),e.getMessage(),status.value(),request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
 }
