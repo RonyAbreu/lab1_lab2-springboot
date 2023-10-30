@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface DisciplinaDAORepository extends JpaRepository<Disciplina, Long> {
     Optional<Disciplina> findByNameIgnoreCase(String name);
+    List<Disciplina> findByNameContainingIgnoreCase(String name);
     List<Disciplina> findByTagsNameIgnoreCase(String tagName);
 }
