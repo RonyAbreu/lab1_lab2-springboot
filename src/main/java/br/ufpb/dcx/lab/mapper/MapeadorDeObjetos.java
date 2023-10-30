@@ -2,13 +2,14 @@ package br.ufpb.dcx.lab.mapper;
 
 import br.ufpb.dcx.lab.dto.disciplina.DisciplinaDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class MapeadorDeObjetos {
-
     public Disciplina converteDtoEmDisciplina(DisciplinaDTO disciplinaDTO){
         Disciplina disciplina = new Disciplina();
         disciplina.setName(disciplinaDTO.getName());
