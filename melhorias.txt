@@ -1,3 +1,4 @@
 - adicionar migrations ao projeto
 - ajustar os controllers com as annotations do Swagger
+- ajustar os controllers com os atributos de produces e consumes
 - criar testes unitários das classes de Service
