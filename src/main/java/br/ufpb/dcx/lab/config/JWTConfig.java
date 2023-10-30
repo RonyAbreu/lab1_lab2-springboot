@@ -11,7 +11,7 @@ public class JWTConfig {
     public FilterRegistrationBean<FiltroDeToken> filtroDeRotas(){
         FilterRegistrationBean<FiltroDeToken> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new FiltroDeToken());
-        filterRegistrationBean.addUrlPatterns("/auth/usuarios/*");
+        filterRegistrationBean.addUrlPatterns("/v1/api/auth/usuarios/**");
         return filterRegistrationBean;
     }
 }

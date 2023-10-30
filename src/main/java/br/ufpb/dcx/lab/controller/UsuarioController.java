@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/auth/usuarios")
+@RequestMapping(value = "/v1/api/auth/usuarios")
 public class UsuarioController {
     private UsuarioService service;
     @Autowired
