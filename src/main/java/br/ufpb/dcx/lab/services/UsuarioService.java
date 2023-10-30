@@ -18,7 +18,6 @@ public class UsuarioService {
     private JWTService jwtService;
 
     @Autowired
-
     public UsuarioService(UsuarioRepository repository, JWTService jwtService) {
         this.repository = repository;
         this.jwtService = jwtService;

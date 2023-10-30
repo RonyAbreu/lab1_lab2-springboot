@@ -1,11 +1,9 @@
 package br.ufpb.dcx.lab.controller;
 
-import br.ufpb.dcx.lab.dto.disciplina.DisciplinaRegisterDTO;
+import br.ufpb.dcx.lab.dto.disciplina.DisciplinaDTO;
 import br.ufpb.dcx.lab.dto.nota.NotaDTO;
-import br.ufpb.dcx.lab.dto.tag.TagDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.services.DisciplinaServices;
-import br.ufpb.dcx.lab.services.TagService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +18,9 @@ public class DisciplinaController {
     private DisciplinaServices disciplinaServices;
 
     @PostMapping(value = "/disciplina")
-    public ResponseEntity<Void> insert(@RequestBody @Valid DisciplinaRegisterDTO obj){
-        disciplinaServices.insertDiscipline(obj);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<DisciplinaDTO> insert(@RequestBody @Valid DisciplinaDTO obj){
+        var disciplinaReturn = disciplinaServices.insertDiscipline(obj);
+        return ResponseEntity.status(HttpStatus.CREATED).body(disciplinaReturn);
     }
 
     @GetMapping(value = "/disciplina/{id}")
@@ -32,8 +30,8 @@ public class DisciplinaController {
     }
 
     @GetMapping(value = "/disciplina")
-    public ResponseEntity<List<Disciplina>> findAll(){
-        List<Disciplina> list = disciplinaServices.findAll();
+    public ResponseEntity<List<DisciplinaDTO>> findAll(){
+        List<DisciplinaDTO> list = disciplinaServices.findAll();
         return ResponseEntity.ok().body(list);
     }
 
@@ -45,7 +43,7 @@ public class DisciplinaController {
     }
 
     @PutMapping(value = "/disciplina/{id}/update")
-    public ResponseEntity<Disciplina> update(@PathVariable Long id, @RequestBody DisciplinaRegisterDTO obj){
+    public ResponseEntity<Disciplina> update(@PathVariable Long id, @RequestBody DisciplinaDTO obj){
         Disciplina d = disciplinaServices.updateDiscipline(obj,id);
         return ResponseEntity.ok().body(d);
     }
