@@ -22,7 +22,7 @@ public class Disciplina implements Serializable{
     private Long id;
     @Column(unique = true)
     private String name;
-    private Integer likes;
+    private Integer likes = 0;
     @ElementCollection
     @CollectionTable(name = "tb_notas")
     private List<Double> notas = new ArrayList<>();
@@ -34,14 +34,8 @@ public class Disciplina implements Serializable{
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
 
-    public Disciplina(Long id, String name, Integer likes) {
-        this.id = id;
+    public Disciplina(String name) {
         this.name = name;
-        this.likes = likes;
-    }
-
-    public void addLikes(){
-        this.likes++;
     }
 
     public String getMedia(){
@@ -58,13 +52,16 @@ public class Disciplina implements Serializable{
         }
         return media;
     }
+    public String formatMedia(Double media){
+        return new DecimalFormat("##.##").format(media);
+    }
 
     public boolean containsTag(Tag tag){
         return tags.contains(tag);
     }
 
-    public String formatMedia(Double media){
-        return new DecimalFormat("##.##").format(media);
+    public void addLikes(){
+        this.likes++;
     }
 
     public void addNotas(Double nota){

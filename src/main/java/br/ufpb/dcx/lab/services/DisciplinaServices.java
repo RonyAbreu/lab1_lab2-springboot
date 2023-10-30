@@ -3,6 +3,7 @@ package br.ufpb.dcx.lab.services;
 import br.ufpb.dcx.lab.dto.disciplina.DisciplinaRegisterDTO;
 import br.ufpb.dcx.lab.dto.nota.NotaDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
+import br.ufpb.dcx.lab.mapper.MapeadorDeObjetos;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaAlreadyExistsException;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
@@ -18,6 +19,8 @@ public class DisciplinaServices {
     @Autowired
     private DisciplinaDAORepository repository;
 
+    private MapeadorDeObjetos mapeadorDeObjetos = new MapeadorDeObjetos();
+
     public void insertDiscipline(DisciplinaRegisterDTO obj) {
         Optional<Disciplina> discipline = repository.findByNameIgnoreCase(obj.getName());
 
@@ -25,7 +28,7 @@ public class DisciplinaServices {
             throw new DisciplinaAlreadyExistsException("Essa disciplina já foi cadastrada!");
         }
 
-        Disciplina disciplinaSave = dtoFromDiscipline(obj);
+        Disciplina disciplinaSave = mapeadorDeObjetos.converteDtoEmDisciplina(obj);
         repository.save(disciplinaSave);
     }
 
@@ -38,7 +41,7 @@ public class DisciplinaServices {
     public List<Disciplina> findAll() {
         List<Disciplina> list = repository.findAll();
 
-        if (list.size() == 0){
+        if (list.isEmpty()){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
 
@@ -95,7 +98,7 @@ public class DisciplinaServices {
     public List<Disciplina> findRankingNotas(){
         List<Disciplina> list = repository.findAll();
 
-        if (list.size() == 0){
+        if (list.isEmpty()){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
 
@@ -106,16 +109,12 @@ public class DisciplinaServices {
     public List<Disciplina> findRankingLikes(){
         List<Disciplina> list = repository.findAll();
 
-        if (list.size() == 0){
+        if (list.isEmpty()){
             throw new DisciplinaNotFound("Lista de disciplinas está vazia!");
         }
 
         list.sort(Comparator.comparingInt(Disciplina::getLikes).reversed());
         return list;
-    }
-
-    public Disciplina dtoFromDiscipline(DisciplinaRegisterDTO disciplineDto){
-        return new Disciplina(null, disciplineDto.getName(),0);
     }
 
     public List<Disciplina> findByTagName(String tagName){
