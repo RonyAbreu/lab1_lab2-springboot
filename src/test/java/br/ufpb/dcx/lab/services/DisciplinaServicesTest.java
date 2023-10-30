@@ -3,7 +3,6 @@ package br.ufpb.dcx.lab.services;
 import br.ufpb.dcx.lab.dto.disciplina.DisciplinaDTO;
 import br.ufpb.dcx.lab.dto.nota.NotaDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
-import br.ufpb.dcx.lab.entities.Tag;
 import br.ufpb.dcx.lab.mock.DisciplinaMock;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 
 import java.util.List;
 import java.util.Optional;

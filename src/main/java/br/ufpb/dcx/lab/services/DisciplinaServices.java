@@ -4,6 +4,7 @@ import br.ufpb.dcx.lab.dto.disciplina.DisciplinaDTO;
 import br.ufpb.dcx.lab.dto.nota.NotaDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.mapper.MapeadorDeObjetos;
+import br.ufpb.dcx.lab.mapper.ModelMapperCustom;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaAlreadyExistsException;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
@@ -29,10 +30,10 @@ public class DisciplinaServices {
             throw new DisciplinaAlreadyExistsException("Essa disciplina já foi cadastrada!");
         }
 
-        Disciplina disciplinaSave = mapeadorDeObjetos.converteDtoEmDisciplina(disciplinaDTO);
+        Disciplina disciplinaSave = ModelMapperCustom.convertObject(disciplinaDTO, Disciplina.class);
         repository.save(disciplinaSave);
 
-        DisciplinaDTO disciplineReturn = mapeadorDeObjetos.converteDisciplinaEmDto(disciplinaSave);
+        DisciplinaDTO disciplineReturn = ModelMapperCustom.convertObject(disciplinaSave, DisciplinaDTO.class);
         return disciplineReturn;
     }
 
