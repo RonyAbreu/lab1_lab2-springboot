@@ -3,6 +3,7 @@ package br.ufpb.dcx.lab.services;
 import br.ufpb.dcx.lab.dto.comentario.ComentarioDTO;
 import br.ufpb.dcx.lab.entities.Comentario;
 import br.ufpb.dcx.lab.entities.Disciplina;
+import br.ufpb.dcx.lab.mapper.ModelMapperCustom;
 import br.ufpb.dcx.lab.repository.ComentarioDAORepository;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
@@ -20,7 +21,7 @@ public class ComentarioService {
     @Autowired
     DisciplinaDAORepository disciplinaDAORepository;
 
-    public void insertComment(Long id, ComentarioDTO comentario){
+    public ComentarioDTO insertComment(Long id, ComentarioDTO comentario){
         Optional<Disciplina> discipline = disciplinaDAORepository.findById(id);
 
         if (discipline.isEmpty()){
@@ -31,6 +32,8 @@ public class ComentarioService {
 
         discipline.get().getComentarios().add(comentarioSave);
         comentarioDAORepository.save(comentarioSave);
+
+        return ModelMapperCustom.convertObject(comentarioSave, ComentarioDTO.class);
     }
 
     private Comentario comentarioDtoFromComentario(Long id,ComentarioDTO comentarioDTO){

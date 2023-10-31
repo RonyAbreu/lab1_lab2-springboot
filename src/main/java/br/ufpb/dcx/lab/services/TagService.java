@@ -3,6 +3,7 @@ package br.ufpb.dcx.lab.services;
 import br.ufpb.dcx.lab.dto.tag.TagDTO;
 import br.ufpb.dcx.lab.entities.Disciplina;
 import br.ufpb.dcx.lab.entities.Tag;
+import br.ufpb.dcx.lab.mapper.ModelMapperCustom;
 import br.ufpb.dcx.lab.repository.DisciplinaDAORepository;
 import br.ufpb.dcx.lab.repository.TagDAORepository;
 import br.ufpb.dcx.lab.services.exceptions.DisciplinaNotFound;
@@ -19,7 +20,7 @@ public class TagService {
     @Autowired
     private DisciplinaDAORepository disciplinaDAORepository;
 
-    public void insertTag(Long id, TagDTO tag){
+    public TagDTO insertTag(Long id, TagDTO tag){
         Optional<Disciplina> discipline = disciplinaDAORepository.findById(id);
 
         Tag tagSave = tagDtoFromTag(tag);
@@ -32,6 +33,8 @@ public class TagService {
 
         discipline.get().getTags().add(tagSave);
         tagDAORepository.save(tagSave);
+
+        return ModelMapperCustom.convertObject(tagSave, TagDTO.class);
     }
 
     private Tag tagDtoFromTag(TagDTO tagDTO){

@@ -7,6 +7,7 @@ import br.ufpb.dcx.lab.entities.Usuario;
 import br.ufpb.dcx.lab.services.JWTService;
 import br.ufpb.dcx.lab.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +25,17 @@ public class UsuarioLoginController {
         this.service = service;
     }
 
-    @PostMapping(value = "/registro")
+    @PostMapping(value = "/registro",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Usuario> cadastraUsuario(@RequestBody UsuarioDeRegistro usuarioDeRegistro){
         var usuarioParaCadastrar = service.cadastraUsuario(usuarioDeRegistro);
         return ResponseEntity.ok(usuarioParaCadastrar);
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/login",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<TokenDoUsuario> autenticaUsuario(@RequestBody UsuarioLogin usuarioLogin){
         var tokenDoUsuario = jwtService.autenticaUsuario(usuarioLogin);
         return ResponseEntity.ok(tokenDoUsuario);

@@ -10,6 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class TagDTO implements Serializable {
+    private Long id;
     @NotBlank(message = "O campo (nome) não pode estar vazio.")
     @Size(min = 2, max = 15, message = "O campo (nome) excedeu o limite de caracteres.")
     private String tagName;

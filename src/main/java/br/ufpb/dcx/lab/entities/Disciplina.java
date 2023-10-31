@@ -29,7 +29,6 @@ public class Disciplina implements Serializable{
     @CollectionTable(name = "tb_notas")
     private List<Double> notas = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "disciplina")
     private List<Comentario> comentarios = new ArrayList<>();
 
